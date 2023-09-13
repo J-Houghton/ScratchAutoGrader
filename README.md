@@ -1,1 +1,1 @@
-"# ScratchAutoGrader" 
+# ScratchAutoGrader

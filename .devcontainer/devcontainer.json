@@ -1,3 +1,4 @@
 {
-  "image": "mcr.microsoft.com/dotnet/sdk:6.0",
+  "name": "Node.js",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:0-18-bullseye"
 }

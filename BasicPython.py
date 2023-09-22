@@ -21,6 +21,8 @@ class BasicPythonDemo:
             "age": 30,
             "is_student": False
         }
+#didactic
+
 
     def display_basic_types(self):
         print("Basic types in Python:")

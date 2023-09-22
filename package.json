@@ -1,0 +1,16 @@
+{
+  "name": "scratchautograder",
+  "version": "1.0.0",
+  "description": "The Scratch Program Autograder is a software tool developed to automate the evaluation of Scratch projects submitted by students. This README document provides an overview of the program, its functionalities, and how to use it.\r Features\r 1. Library of Functions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^11.1.1",
+    "jszip": "^3.10.1"
+  }
+}

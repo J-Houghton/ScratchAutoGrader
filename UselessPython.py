@@ -7,7 +7,7 @@ class BasicPythonDemo:
         self.integer_type = 10
         self.float_type = 20.5
         self.string_type = "Hello, World!"
-        self.boolean_type = True
+        self.boolean_type = True``
 
         # List (array) data type:
         self.list_type = [1, 2, 3, 4, 5]

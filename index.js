@@ -9,7 +9,7 @@ unzipSb3(filePath).catch(error => {
     console.error("An error occurred for unzip:", error);
 });
 
-const sb3filePath = './unzippedSb3/project.json';
+const sb3filePath = './unzippedSb3/walking-cat.json';
 
 // need to make sure .json exist 
 const parse = require('./parser');

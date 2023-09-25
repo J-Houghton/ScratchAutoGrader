@@ -4,7 +4,7 @@ const fs = require('fs-extra');
 async function unzipSb3(filePath) {
     // Load the .sb3 file
     const data = await fs.readFile(filePath);
-
+    console.log(filePath);
     // Load the .sb3 content with JSZip
     const zip = new JSZip();
     const contents = await zip.loadAsync(data);
@@ -24,8 +24,8 @@ async function unzipSb3(filePath) {
 
     console.log("Unzipping completed!");
 }
-unzipSb3().catch(error => {
-    console.error("An error occurred:", error);
-});
+// unzipSb3().catch(error => {
+//     console.error("An error occurred:", error);
+// });
 
 module.exports = unzipSb3; // Export the function to be used in other files

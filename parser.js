@@ -1,22 +1,24 @@
 const fs = require('fs').promises;
-const { toScratchblocks } = require('parse-sb3-blocks');
 
 //const projectJSON = require('./unzippedSb3/project.json');
 
 async function parse(filePath) {
     console.log("parsing...");
     console.log(filePath);
-    
-    // Read and parse the JSON file
+
     const jsonData = await fs.readFile(filePath, 'utf-8');
-    const projectJSON = JSON.parse(jsonData);
-    const blocks = projectJSON.blocks;
+    const largeJsonObject = JSON.parse(jsonData);
+    const jsonString = JSON.stringify(largeJsonObject, null, 2); // 'null' and '2' are used for formatting
 
-    // Here the filtering of blocks can be done based on opcode
-    const whenGreenflag = Object.keys(blocks).filter(key => blocks[key].opcode === 'event_whenflagclicked')[0];
+// Write the formatted JSON string to a file
+    fs.writeFile('output.json', jsonString, (err) => {
+    if (err) {
+        console.error('Error writing to file', err);
+    } else {
+        console.log('Successfully wrote to file');
+    }
+    });
 
-    const scratchblocksCode = toScratchblocks(whenGreenflag, blocks, 'en', {tab: '  '});
-    console.log(scratchblocksCode);
 }
 
 module.exports = parse;

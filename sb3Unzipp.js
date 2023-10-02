@@ -23,9 +23,7 @@ async function unzipSb3(filePath) {
     }
 
     console.log("Unzipping completed!");
+    return './unzippedSb3/project.json'; // return the path of the unzipped project.json file
 }
-// unzipSb3().catch(error => {
-//     console.error("An error occurred:", error);
-// });
 
 module.exports = unzipSb3; // Export the function to be used in other files

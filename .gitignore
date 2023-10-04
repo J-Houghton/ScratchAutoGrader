@@ -131,3 +131,4 @@ dist
 .pnp.*
 
 unzippedSb3/
+output.json

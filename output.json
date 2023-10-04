@@ -31,7 +31,7 @@
           "dataFormat": "wav",
           "format": "",
           "rate": 48000,
-          "sampleCount": 1124,
+          "sampleCount": 1123,
           "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
         }
       ],
@@ -49,44 +49,16 @@
       "lists": {},
       "broadcasts": {},
       "blocks": {
-        "Vv/jS!9k3n_fTFSl.+q,": {
-          "opcode": "event_whenflagclicked",
-          "next": "{(ZYJ0$EsX?y8=|}Sph.",
-          "parent": null,
-          "inputs": {},
-          "fields": {},
-          "shadow": false,
-          "topLevel": true,
-          "x": 102,
-          "y": 95
-        },
-        "{(ZYJ0$EsX?y8=|}Sph.": {
-          "opcode": "motion_turnright",
-          "next": "I!|W-f5tyauIuA-=t(z/",
-          "parent": "Vv/jS!9k3n_fTFSl.+q,",
-          "inputs": {
-            "DEGREES": [
-              1,
-              [
-                4,
-                "15"
-              ]
-            ]
-          },
-          "fields": {},
-          "shadow": false,
-          "topLevel": false
-        },
-        "I!|W-f5tyauIuA-=t(z/": {
+        "J6,h/i(t7;wpJ^V3*E`S": {
           "opcode": "motion_movesteps",
-          "next": "hzvM?YPK4$@g$ej@6H}P",
-          "parent": "{(ZYJ0$EsX?y8=|}Sph.",
+          "next": "/NUoPXv`d=[_5=G.7Rj.",
+          "parent": "S3RsA2}M=u$VeT-s$C(-",
           "inputs": {
             "STEPS": [
               1,
               [
                 4,
-                "1"
+                "10"
               ]
             ]
           },
@@ -94,10 +66,10 @@
           "shadow": false,
           "topLevel": false
         },
-        "hzvM?YPK4$@g$ej@6H}P": {
+        "/NUoPXv`d=[_5=G.7Rj.": {
           "opcode": "looks_sayforsecs",
-          "next": "()Uq|x~^}.gpPBb,kz]4",
-          "parent": "I!|W-f5tyauIuA-=t(z/",
+          "next": "+[Bp#(s1.C-xwaE1b7[4",
+          "parent": "J6,h/i(t7;wpJ^V3*E`S",
           "inputs": {
             "MESSAGE": [
               1,
@@ -107,6 +79,97 @@
               ]
             ],
             "SECS": [
+              3,
+              "g8[}M$wqSm.4rP9C#Pg{",
+              [
+                4,
+                "2"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "+[Bp#(s1.C-xwaE1b7[4": {
+          "opcode": "sound_playuntildone",
+          "next": "6:wA;]FRLmr6|%bZi.1q",
+          "parent": "/NUoPXv`d=[_5=G.7Rj.",
+          "inputs": {
+            "SOUND_MENU": [
+              1,
+              "7!T?orjp8H}io9NdeMdj"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "7!T?orjp8H}io9NdeMdj": {
+          "opcode": "sound_sounds_menu",
+          "next": null,
+          "parent": "+[Bp#(s1.C-xwaE1b7[4",
+          "inputs": {},
+          "fields": {
+            "SOUND_MENU": [
+              "Meow",
+              null
+            ]
+          },
+          "shadow": true,
+          "topLevel": false
+        },
+        "S3RsA2}M=u$VeT-s$C(-": {
+          "opcode": "event_whenflagclicked",
+          "next": "J6,h/i(t7;wpJ^V3*E`S",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 1400,
+          "y": 209
+        },
+        "6:wA;]FRLmr6|%bZi.1q": {
+          "opcode": "control_wait",
+          "next": "QCaDYNdDEx2^g]eF*l4X",
+          "parent": "+[Bp#(s1.C-xwaE1b7[4",
+          "inputs": {
+            "DURATION": [
+              3,
+              "r;n[2ka,}vW@q(5S)WA!",
+              [
+                5,
+                "1"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "r;n[2ka,}vW@q(5S)WA!": {
+          "opcode": "sensing_mousex",
+          "next": null,
+          "parent": "6:wA;]FRLmr6|%bZi.1q",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "g8[}M$wqSm.4rP9C#Pg{": {
+          "opcode": "operator_add",
+          "next": null,
+          "parent": "/NUoPXv`d=[_5=G.7Rj.",
+          "inputs": {
+            "NUM1": [
+              1,
+              [
+                4,
+                "2"
+              ]
+            ],
+            "NUM2": [
               1,
               [
                 4,
@@ -118,91 +181,38 @@
           "shadow": false,
           "topLevel": false
         },
-        "()Uq|x~^}.gpPBb,kz]4": {
-          "opcode": "sound_play",
-          "next": "=a/_^M6u;SMqXS%.G-Zv",
-          "parent": "hzvM?YPK4$@g$ej@6H}P",
+        "QCaDYNdDEx2^g]eF*l4X": {
+          "opcode": "data_setvariableto",
+          "next": "hx9sgF~VPR.DHMY~Redb",
+          "parent": "6:wA;]FRLmr6|%bZi.1q",
           "inputs": {
-            "SOUND_MENU": [
+            "VALUE": [
               1,
-              "OHnmxFS!CNv^soSvdl7)"
+              [
+                10,
+                "2"
+              ]
             ]
           },
-          "fields": {},
-          "shadow": false,
-          "topLevel": false
-        },
-        "OHnmxFS!CNv^soSvdl7)": {
-          "opcode": "sound_sounds_menu",
-          "next": null,
-          "parent": "()Uq|x~^}.gpPBb,kz]4",
-          "inputs": {},
           "fields": {
-            "SOUND_MENU": [
-              "Meow",
-              null
+            "VARIABLE": [
+              "my variable",
+              "`jEk@4|i[#Fk?(8x)AV.-my variable"
             ]
           },
-          "shadow": true,
-          "topLevel": false
-        },
-        "(gWe4TG9ea!hC0.]#*1$": {
-          "opcode": "sound_stopallsounds",
-          "next": "f7.HycsAQM#Es5`eI9s|",
-          "parent": "=a/_^M6u;SMqXS%.G-Zv",
-          "inputs": {},
-          "fields": {},
           "shadow": false,
           "topLevel": false
         },
-        "=a/_^M6u;SMqXS%.G-Zv": {
-          "opcode": "control_wait",
-          "next": "(gWe4TG9ea!hC0.]#*1$",
-          "parent": "()Uq|x~^}.gpPBb,kz]4",
-          "inputs": {
-            "DURATION": [
-              1,
-              [
-                5,
-                "3"
-              ]
-            ]
-          },
-          "fields": {},
-          "shadow": false,
-          "topLevel": false
-        },
-        "f7.HycsAQM#Es5`eI9s|": {
-          "opcode": "control_repeat",
+        "hx9sgF~VPR.DHMY~Redb": {
+          "opcode": "music_restForBeats",
           "next": null,
-          "parent": "(gWe4TG9ea!hC0.]#*1$",
+          "parent": "QCaDYNdDEx2^g]eF*l4X",
           "inputs": {
-            "TIMES": [
-              1,
-              [
-                6,
-                "4"
-              ]
-            ],
-            "SUBSTACK": [
-              2,
-              "TKSgXht~tuDEC/{L8(.S"
-            ]
-          },
-          "fields": {},
-          "shadow": false,
-          "topLevel": false
-        },
-        "TKSgXht~tuDEC/{L8(.S": {
-          "opcode": "motion_turnleft",
-          "next": null,
-          "parent": "f7.HycsAQM#Es5`eI9s|",
-          "inputs": {
-            "DEGREES": [
+            "BEATS": [
               1,
               [
                 4,
-                "90"
+                "0.25"
               ]
             ]
           },
@@ -240,26 +250,28 @@
           "dataFormat": "wav",
           "format": "",
           "rate": 48000,
-          "sampleCount": 40682,
+          "sampleCount": 40681,
           "md5ext": "83c36d806dc92327b9e7049a565c6bff.wav"
         }
       ],
       "volume": 100,
       "layerOrder": 1,
       "visible": true,
-      "x": 2.5390580112600545,
-      "y": -1.4659258262890682,
+      "x": 0,
+      "y": 0,
       "size": 100,
-      "direction": 135,
+      "direction": 90,
       "draggable": false,
       "rotationStyle": "all around"
     }
   ],
   "monitors": [],
-  "extensions": [],
+  "extensions": [
+    "music"
+  ],
   "meta": {
     "semver": "3.0.0",
-    "vm": "1.5.92",
-    "agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/110.0"
+    "vm": "2.0.5",
+    "agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
   }
 }

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const orphanSort = require('./orphans');
 const unzipSb3 = require('./sb3Unzipp');
 
 // Grab the file path from command-line arguments
@@ -20,3 +21,5 @@ unzipSb3(filePath)
     .catch(error => {
         console.error("An error occurred for unzip:", error);
     });
+
+orphanSort('output.json');

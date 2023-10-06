@@ -16,7 +16,7 @@
       "blocks": {
         "Y+lihnBIOz7fD37Q=ZnK": {
           "opcode": "event_whenflagclicked",
-          "next": null,
+          "next": "$:vEG}yp2s=#j)2Q)[BJ",
           "parent": null,
           "inputs": {},
           "fields": {},
@@ -107,6 +107,34 @@
           "topLevel": true,
           "x": 839,
           "y": 417
+        },
+        "$:vEG}yp2s=#j)2Q)[BJ": {
+          "opcode": "sound_playuntildone",
+          "next": null,
+          "parent": "Y+lihnBIOz7fD37Q=ZnK",
+          "inputs": {
+            "SOUND_MENU": [
+              1,
+              "L)QaI]hXqX9=Kaj/@@pp"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "L)QaI]hXqX9=Kaj/@@pp": {
+          "opcode": "sound_sounds_menu",
+          "next": null,
+          "parent": "$:vEG}yp2s=#j)2Q)[BJ",
+          "inputs": {},
+          "fields": {
+            "SOUND_MENU": [
+              "pop",
+              null
+            ]
+          },
+          "shadow": true,
+          "topLevel": false
         }
       },
       "comments": {},
@@ -148,7 +176,7 @@
       "blocks": {
         "~jw3DbpuL|d@iR@0SAf8": {
           "opcode": "looks_say",
-          "next": null,
+          "next": "oS+nJ]^Am0ZZ_XyI:8Zd",
           "parent": null,
           "inputs": {
             "MESSAGE": [
@@ -164,6 +192,23 @@
           "topLevel": true,
           "x": 172,
           "y": 229
+        },
+        "oS+nJ]^Am0ZZ_XyI:8Zd": {
+          "opcode": "motion_turnleft",
+          "next": null,
+          "parent": "~jw3DbpuL|d@iR@0SAf8",
+          "inputs": {
+            "DEGREES": [
+              1,
+              [
+                4,
+                "15"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
         }
       },
       "comments": {},

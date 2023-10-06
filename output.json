@@ -1,0 +1,265 @@
+{
+  "targets": [
+    {
+      "isStage": true,
+      "name": "Stage",
+      "variables": {
+        "`jEk@4|i[#Fk?(8x)AV.-my variable": [
+          "my variable",
+          0
+        ]
+      },
+      "lists": {},
+      "broadcasts": {
+        "~74LMZ1TPu$[YfyU2p^M": "message1"
+      },
+      "blocks": {
+        "Y+lihnBIOz7fD37Q=ZnK": {
+          "opcode": "event_whenflagclicked",
+          "next": "$:vEG}yp2s=#j)2Q)[BJ",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 357,
+          "y": 225
+        },
+        "B*gGxlI~MEZ9-Ju49%+x": {
+          "opcode": "event_whenkeypressed",
+          "next": null,
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "KEY_OPTION": [
+              "space",
+              null
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 649,
+          "y": 235
+        },
+        "]lV3}z3LwM/O1|B%v-6+": {
+          "opcode": "event_whenstageclicked",
+          "next": null,
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 1025,
+          "y": 234
+        },
+        "q*b=xBFg.TxzxJrLUW@S": {
+          "opcode": "event_whenbackdropswitchesto",
+          "next": null,
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BACKDROP": [
+              "backdrop1",
+              null
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 1348,
+          "y": 210
+        },
+        "Xk:b`skdY6nogJv.`JSG": {
+          "opcode": "event_whengreaterthan",
+          "next": null,
+          "parent": null,
+          "inputs": {
+            "VALUE": [
+              1,
+              [
+                4,
+                "10"
+              ]
+            ]
+          },
+          "fields": {
+            "WHENGREATERTHANMENU": [
+              "LOUDNESS",
+              null
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 483,
+          "y": 401
+        },
+        "$R].S$@Q4Q=ZZsnN/w$z": {
+          "opcode": "event_whenbroadcastreceived",
+          "next": null,
+          "parent": null,
+          "inputs": {},
+          "fields": {
+            "BROADCAST_OPTION": [
+              "message1",
+              "~74LMZ1TPu$[YfyU2p^M"
+            ]
+          },
+          "shadow": false,
+          "topLevel": true,
+          "x": 839,
+          "y": 417
+        },
+        "$:vEG}yp2s=#j)2Q)[BJ": {
+          "opcode": "sound_playuntildone",
+          "next": null,
+          "parent": "Y+lihnBIOz7fD37Q=ZnK",
+          "inputs": {
+            "SOUND_MENU": [
+              1,
+              "L)QaI]hXqX9=Kaj/@@pp"
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "L)QaI]hXqX9=Kaj/@@pp": {
+          "opcode": "sound_sounds_menu",
+          "next": null,
+          "parent": "$:vEG}yp2s=#j)2Q)[BJ",
+          "inputs": {},
+          "fields": {
+            "SOUND_MENU": [
+              "pop",
+              null
+            ]
+          },
+          "shadow": true,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "name": "backdrop1",
+          "dataFormat": "svg",
+          "assetId": "cd21514d0531fdffb22204e0ec5ed84a",
+          "md5ext": "cd21514d0531fdffb22204e0ec5ed84a.svg",
+          "rotationCenterX": 240,
+          "rotationCenterY": 180
+        }
+      ],
+      "sounds": [
+        {
+          "name": "pop",
+          "assetId": "83a9787d4cb6f3b7632b4ddfebf74367",
+          "dataFormat": "wav",
+          "format": "",
+          "rate": 48000,
+          "sampleCount": 1124,
+          "md5ext": "83a9787d4cb6f3b7632b4ddfebf74367.wav"
+        }
+      ],
+      "volume": 100,
+      "layerOrder": 0,
+      "tempo": 60,
+      "videoTransparency": 50,
+      "videoState": "on",
+      "textToSpeechLanguage": null
+    },
+    {
+      "isStage": false,
+      "name": "Sprite1",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "~jw3DbpuL|d@iR@0SAf8": {
+          "opcode": "looks_say",
+          "next": "oS+nJ]^Am0ZZ_XyI:8Zd",
+          "parent": null,
+          "inputs": {
+            "MESSAGE": [
+              1,
+              [
+                10,
+                "Hello!"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 172,
+          "y": 229
+        },
+        "oS+nJ]^Am0ZZ_XyI:8Zd": {
+          "opcode": "motion_turnleft",
+          "next": null,
+          "parent": "~jw3DbpuL|d@iR@0SAf8",
+          "inputs": {
+            "DEGREES": [
+              1,
+              [
+                4,
+                "15"
+              ]
+            ]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "name": "costume1",
+          "bitmapResolution": 1,
+          "dataFormat": "svg",
+          "assetId": "bcf454acf82e4504149f7ffe07081dbc",
+          "md5ext": "bcf454acf82e4504149f7ffe07081dbc.svg",
+          "rotationCenterX": 48,
+          "rotationCenterY": 50
+        },
+        {
+          "name": "costume2",
+          "bitmapResolution": 1,
+          "dataFormat": "svg",
+          "assetId": "0fb9be3e8397c983338cb71dc84d0b25",
+          "md5ext": "0fb9be3e8397c983338cb71dc84d0b25.svg",
+          "rotationCenterX": 46,
+          "rotationCenterY": 53
+        }
+      ],
+      "sounds": [
+        {
+          "name": "Meow",
+          "assetId": "83c36d806dc92327b9e7049a565c6bff",
+          "dataFormat": "wav",
+          "format": "",
+          "rate": 48000,
+          "sampleCount": 40682,
+          "md5ext": "83c36d806dc92327b9e7049a565c6bff.wav"
+        }
+      ],
+      "volume": 100,
+      "layerOrder": 1,
+      "visible": true,
+      "x": 0,
+      "y": 0,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    }
+  ],
+  "monitors": [],
+  "extensions": [],
+  "meta": {
+    "semver": "3.0.0",
+    "vm": "2.0.5",
+    "agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/110.0"
+  }
+}

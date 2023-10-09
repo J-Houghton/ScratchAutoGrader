@@ -49,38 +49,3 @@ function CountBlockPerType(json, type)
     return blockAmount;
 }
 
-/**
- * Counts the amount of different types of blocks in the file
- * @param {*} json The output file with the AST tree
- * @returns The amount of different types of blocks
- */
-function CountDifferentBlockTypes(json) 
-{
-    const targets = json.targets;
-    let blockTypes = {};
-
-    for (let type in BlockType) { blockTypes[BlockType[type]] = 0; }
-
-    for (let i = 0; i < targets.length; i++)
-    {
-        let blocks = json.targets[i].blocks;
-        if (blocks != undefined)
-        {
-            for (let block in blocks) 
-            {
-                let opcode = blocks[block].opcode;
-                const code = opcode.split("_");
-                
-                if (blockTypes[code[0]] == 0) {
-                    blockTypes[code[0]]++;
-                }
-            }
-        }
-    }
-
-    let total = 0;
-
-    for (let type in blockTypes) { total += blockTypes[type]; }
-
-    return total;
-}

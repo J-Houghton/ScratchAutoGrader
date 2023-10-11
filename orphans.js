@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { file } = require("jszip");
-async function orphanSort(filePath){
+function orphanSort(filePath){
     // Grab the file path from command-line arguments (Deprecated)
     //const filePath = process.argv[2]; 
 
@@ -78,6 +78,10 @@ async function orphanSort(filePath){
     console.info(nonOrphans);
     console.log("orphans: ");
     console.info(orphans);
+    var result = [];
+    result.push(orphans);
+    result.push(nonOrphans);
+    return result;
 }
 
 module.exports = orphanSort; // Export the function to be used in other files

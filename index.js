@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const { waitForDebugger } = require('inspector');
 const orphanSort = require('./orphans');
 const unzipSb3 = require('./sb3Unzipp');
 
@@ -18,8 +19,15 @@ unzipSb3(filePath)
             console.error("An error occurred for parse:", error);
         });
     })
+    .then(() => {
+        sleep(500).then(() => { orphanSort('output.json') });
+    })
+    .then((unzippedFilePath) => {
+    })
     .catch(error => {
         console.error("An error occurred for unzip:", error);
     });
 
-orphanSort('output.json');
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+    }

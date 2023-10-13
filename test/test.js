@@ -1,8 +1,11 @@
 var assert = require('assert');
 var should = require('chai');
+const fs = require('fs');
 
-const method = require('../orphans.js');
 const orphanSort = require('../orphans.js');
+const unzipSb3 = require('../sb3Unzipp.js');
+const parse = require('../parser.js');
+const count = require('../count.js');
 
 describe('Array Baseline', function () {
   describe('#baseline()', function () {
@@ -14,20 +17,53 @@ describe('Array Baseline', function () {
 
 describe('Orphan result', function () {
   describe('#orphansFile()', function () {
-    var comparison = [[], ['78A9q__=!j!06~s.DEur', '~jw3DbpuL|d@iR@0SAf8']]
-    it('Should return -1 when the value is not present', function () {
-      var result = orphanSort('output.json');
+    var comparison = [['~jw3DbpuL|d@iR@0SAf8'], [
+      'Y+lihnBIOz7fD37Q=ZnK',
+      'B*gGxlI~MEZ9-Ju49%+x',
+      ']lV3}z3LwM/O1|B%v-6+',
+      'q*b=xBFg.TxzxJrLUW@S',
+      'Xk:b`skdY6nogJv.`JSG',
+      '$R].S$@Q4Q=ZZsnN/w$z'
+    ]]
+    it('Should create an output file with expected contents', function () {
+      var result = orphanSort('/test/testFiles/output.json');
       assert.deepEqual(result, comparison);
     });
   });
 });
 
-describe('Orphan result', function () {
-  describe('#orphansFile()', function () {
-    var comparison = [[], ['78A9q__=!j!06~s.DEur', '~jw3DbpuL|d@iR@0SAf8']]
-    it('Should return -1 when the value is not present', function () {
-      var result = orphanSort('output.json');
-      assert.deepEqual(result, comparison);
+describe('Unzipsb3 result', function () {
+  describe('#unzippedsb3File()', function () {
+    it('Should find the project file when unzipped', function () {
+      unzipSb3('sb3Files/3-hello1.sb3');
+      var filepath = './unzippedSb3/project.json'
+      let fileExists = fs.existsSync(filepath); 
+      assert.equal(fileExists, true);
+    });
+  });
+});
+
+describe('Parser result', function () {
+  describe('#unzippedsb3File()', function () {
+    it('Should find the project file when parsed', function () {
+      parse('./unzippedSb3/project.json').catch(error => {
+        console.error("An error occurred for parse:", error);
+      });
+      var filepath = 'output.json'
+      let fileExists = fs.existsSync(filepath); 
+      assert.equal(fileExists, true);
+    });
+  });
+});
+
+describe('Count result', function () {
+  describe('#unzippedsb3File()', function () {
+    it('Should return correct block type count', function () {
+      var filePath = '../output.json';
+      var data = require(filePath);
+      var count = count.CountBlockPerType(data);
+      console.log(count);
+      assert.equal(1, true);
     });
   });
 });

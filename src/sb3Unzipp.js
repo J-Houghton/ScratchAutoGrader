@@ -1,7 +1,7 @@
-const JSZip = require('jszip');
-const fs = require('fs-extra');
+import JSZip from 'jszip';
+import fs from 'fs-extra';
 
-async function unzipSb3(filePath) {
+export async function unzipSb3(filePath) {
     // Load the .sb3 file
     const data = await fs.readFile(filePath);
     console.log(filePath);
@@ -25,5 +25,4 @@ async function unzipSb3(filePath) {
     console.log("Unzipping completed!");
     return './unzippedSb3/project.json'; // return the path of the unzipped project.json file
 }
-
-module.exports = unzipSb3; // Export the function to be used in other files
+ 

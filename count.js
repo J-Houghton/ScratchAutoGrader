@@ -4,22 +4,20 @@ const BlockType =
     Motion: "motion",
     Looks: "looks", 
     Sound: "sound",
-    Events: "events",
+    Event: "event",
     Control: "control",
     Sensing: "sensing",
-    Operators: "operators",
-    Variables: "variables",
+    Operator: "operator",
+    Variable: "data",
     Music: "music"
 }
 
-/* Tests
 const output = require('./output');
 
-let amount = CountBlockPerType(output, "control");
+let amount = CountBlockPerType(output, "sound");
 let diffAmount = CountDifferentBlockTypes(output);
 console.log("CountBlockPerType(): " + amount);
 console.log("CountDifferentBlockTypes(): " + diffAmount);
-*/
 
 /**
  * Counts the amount of blocks of a specific type
@@ -41,6 +39,7 @@ function CountBlockPerType(json, type)
             {
                 let opcode = blocks[block].opcode;      
                 const code = opcode.split("_");
+                if (code.length > 2 && code[2] == "menu") { continue; }
                 if (code[0] == type) { blockAmount++; }
             }
         }
@@ -84,3 +83,6 @@ function CountDifferentBlockTypes(json)
 
     return total;
 }
+
+module.exports = CountBlockPerType;
+module.exports = CountDifferentBlockTypes;

@@ -3,10 +3,10 @@ const BlockType =
     Motion: "motion",
     Looks: "looks",
     Sound: "sound",
-    Events: "events",
+    Events: "event",
     Control: "control",
     Sensing: "sensing",
-    Operators: "operators",
-    Variables: "variables",
+    Operators: "operator",
+    Data: "data",
     Music: "music"
 }

@@ -14,10 +14,12 @@ const BlockType =
 
 const output = require('./output');
 
+/*
 let amount = CountBlockPerType(output, "sound");
 let diffAmount = CountDifferentBlockTypes(output);
 console.log("CountBlockPerType(): " + amount);
 console.log("CountDifferentBlockTypes(): " + diffAmount);
+*/
 
 /**
  * Counts the amount of blocks of a specific type
@@ -84,5 +86,5 @@ function CountDifferentBlockTypes(json)
     return total;
 }
 
-module.exports = CountBlockPerType;
-module.exports = CountDifferentBlockTypes;
+exports.CountBlockPerType = CountBlockPerType;
+exports.CountDifferentBlockTypes = CountDifferentBlockTypes;

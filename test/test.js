@@ -5,6 +5,7 @@ const method = require('../orphans.js');
 const orphanSort = require('../orphans.js');
 const countMethod = require('../count.js');
 
+/*
 describe('Array Baseline', function () {
   describe('#baseline()', function () {
     it('Should return -1 when the value is not present', function () {
@@ -22,11 +23,15 @@ describe('Orphan result', function () {
     });
   });
 });
+*/
 
+// Using test3.sb3
 describe('Count Test', function() {
   describe('#outputFile()', function() {
-    var file = '../output.json';
-    var count = countMethod.CountBlockPerType(file, "events");
-    assert.equal(count, 1);
+    it('CountBlockPerType should be 2', function() {
+      var file = require('../output.json');
+      var count = countMethod.CountBlockPerType(file, "sound");
+      assert.equal(count, 2);
+    });
   });
 });

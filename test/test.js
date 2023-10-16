@@ -61,9 +61,21 @@ describe('Count result', function () {
     it('Should return correct block type count', function () {
       var filePath = '../output.json';
       var data = require(filePath);
-      var count = count.CountBlockPerType(data);
-      console.log(count);
-      assert.equal(1, true);
+      var count1 = count.CountBlockPerType(data, "event");
+      console.log(count1);
+      assert.equal(count1, 6);
+    });
+  });
+});
+
+describe('Count result', function () {
+  describe('#unzippedsb3File()', function () {
+    it('Should return correct type of block count', function () {
+      var filePath = '../output.json';
+      var data = require(filePath);
+      var count1 = count.CountDifferentBlockTypes(data);
+      console.log(count1);
+      assert.equal(2, count1);
     });
   });
 });

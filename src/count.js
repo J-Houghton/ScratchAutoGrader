@@ -49,3 +49,43 @@ function CountBlockPerType(json, type)
     return blockAmount;
 }
 
+export function countBlockTypes(ast) {
+    // Find all nodes of type 'Block'
+    const allBlocks = ast.findAllNodes(node => node.type === 'Block');
+
+    const counts = {};
+    allBlocks.forEach(block => {
+        const type = block.data.opcode; // Assuming 'opcode' represents the type of the block
+        counts[type] = (counts[type] || 0) + 1;
+    });
+
+    return counts; // This object will have keys as block types and values as their counts
+}
+
+export function countBlocksByOpcode(counts, criteria) {
+    // Check if the criteria match the start or the whole of any opcode
+    return Object.keys(counts)
+        .filter(opcode => opcode === criteria || opcode.startsWith(criteria))
+        .reduce((total, key) => total + counts[key], 0);
+}
+
+
+export function findOrphans(ast) {
+    const orphans = [];
+
+    // We're looking for nodes of type 'Block' that meet the orphan criteria
+    const allBlocks = ast.findAllNodes(node => node.type === 'Block');
+
+    allBlocks.forEach(blockNode => {
+        const { opcode, topLevel } = blockNode.data;
+
+        if (topLevel && ![
+            'event_whenflagclicked', 'event_whenkeypressed', 'event_whenstageclicked',
+            'event_whenbackdropswitchesto', 'event_whengreaterthan', 'event_whenbroadcastreceived'
+        ].includes(opcode)) {
+            orphans.push(blockNode);
+        }
+    });
+
+    return orphans;
+}

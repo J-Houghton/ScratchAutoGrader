@@ -2,6 +2,8 @@
 
 const { file } = require("jszip");
 
+import fs from 'fs/promises';
+
 // Grab the file path from command-line arguments
 const filePath = process.argv[2]; 
 
@@ -10,6 +12,7 @@ if (!filePath) {
     process.exit(1);
 }
 const data = require('./' + filePath);
+
 const orphans = [];
 const nonOrphans = [];
 const unDecided = [];

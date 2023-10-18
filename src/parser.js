@@ -21,7 +21,7 @@ export class Parser {
             this.projectData = JSON.parse(jsonData);
             //await this.writeDebugDataToFile(this.projectData);
             // Create an AST with the root node
-            //const ast = this.buildAST(this.projectData);
+            const ast = this.buildAST(this.projectData);
 
             // Write the AST back to a JSON file, if needed
             await this.writeASTToFile(ast);

@@ -17,10 +17,9 @@ unzipSb3(filePath)
     .then(async (unzippedFilePath) => {
         const parser = new Parser(); 
         try {
-            const rawData = await parser.parse(unzippedFilePath); 
-            const ast = parser.buildAST(rawData);
-            console.log(ast);
-            const counts = countBlockTypes(ast);
+            const astRootNode = await parser.parse(unzippedFilePath);  
+            console.log(astRootNode);
+            const counts = countBlockTypes(astRootNode);
             console.log("Number of unique block types:", counts);
 
             const uniqueBlockCount = Object.keys(counts).length; 
@@ -34,11 +33,11 @@ unzipSb3(filePath)
                 console.log(`Count of blocks for opcode "${opcode}": `, count);
             });
 
-            const { orphans, nonOrphans } = findOrphans(ast);
-
-            console.log("Orphans:", orphanNodes.map(node => node.data));
+            const analysisResult = findOrphans(astRootNode);
+            console.log("nonorphans: ", analysisResult.nonOrphans);
+            console.log("orphans: ", analysisResult.orphans);
         } catch (error) {
-            console.error("An error occurred during parsing: ", error);
+            console.error("An error occurred during index.js: ", error);
         } 
     })
     .catch(error => {

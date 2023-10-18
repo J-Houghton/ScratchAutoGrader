@@ -55,7 +55,7 @@ export function countBlockTypes(ast) {
 
     const counts = {};
     allBlocks.forEach(block => {
-        const type = block.data.opcode; // Assuming 'opcode' represents the type of the block
+        const type = block.data.opcode; 
         counts[type] = (counts[type] || 0) + 1;
     });
 
@@ -70,22 +70,62 @@ export function countBlocksByOpcode(counts, criteria) {
 }
 
 
-export function findOrphans(ast) {
+export function findOrphans(projectData) {
     const orphans = [];
+    const nonOrphans = [];
+    const unDecided = [];
 
-    // We're looking for nodes of type 'Block' that meet the orphan criteria
-    const allBlocks = ast.findAllNodes(node => node.type === 'Block');
+    const targets = projectData.root.children;
+   // console.log(targets);
+    for (let i = 0; i < targets.length; i++) {
+        var blocks = targets[i].children;
+        var unDecidedSub = [];
+        var blockKeys = Object.keys(blocks);
 
-    allBlocks.forEach(blockNode => {
-        const { opcode, topLevel } = blockNode.data;
+        for (let i = 0; i < blockKeys.length; i++) {
+            var name = blockKeys[i];
+            var opcode = blocks[name]['opcode'];
+            var topLevel = blocks[name]['topLevel'];
 
-        if (topLevel && ![
-            'event_whenflagclicked', 'event_whenkeypressed', 'event_whenstageclicked',
-            'event_whenbackdropswitchesto', 'event_whengreaterthan', 'event_whenbroadcastreceived'
-        ].includes(opcode)) {
-            orphans.push(blockNode);
+            if(topLevel == true){
+                if(opcode == 'event_whenflagclicked' || opcode == 'event_whenkeypressed' || opcode == 'event_whenstageclicked' 
+                || opcode == 'event_whenbackdropswitchesto' || opcode == 'event_whengreaterthan' || opcode == 'event_whenbroadcastreceived'){
+                    nonOrphans.push(name);
+                }
+                else{
+                    orphans.push(name);
+                }
+            }
+            else{ 
+                if(!unDecided.includes(name)){
+                    unDecidedSub.push(name); 
+                }
+            }
         }
-    });
+        unDecided.push(unDecidedSub);
+    }
+    console.log(targets);
+    for (let i = 0; i < targets.length; i++) {
+        var blocks = targets[i].children;
+        var blockKeys = Object.keys(blocks);
+        var unDecidedSub = unDecided[i];
+        for(let i = 0; i < unDecidedSub.length; i++){
+            var blockName = unDecidedSub[i];
+            if(blocks[blockName].parent == null){
+                console.log("Null parent error");
+            }
+            else if(orphans.includes(blocks[blockName].parent)){
+                orphans.push(blockName);
+            }
+            else if(nonOrphans.includes(blocks[blockName].parent)){
+                nonOrphans.push(blockName);
+            }
+            else{console.log(blockName)}
+        }
+    }
 
-    return orphans;
+    return {
+        nonOrphans,
+        orphans
+    };
 }

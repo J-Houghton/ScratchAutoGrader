@@ -31,3 +31,5 @@ Object.keys(outputFiles).forEach(key => {
     fs.writeFileSync(path.join(__dirname, "output", key), outputFiles[key]);
   }
 });
+
+//index.js will be the file that contains the logic of the sb3 project, while the individual sprites/stages will be in their own files contains the logic for their appearances, sounds, etc.

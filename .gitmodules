@@ -1,0 +1,3 @@
+[submodule "src/src/sb-edit"]
+	path = src/src/sb-edit
+	url = https://github.com/leopard-js/sb-edit.git

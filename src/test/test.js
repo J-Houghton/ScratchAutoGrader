@@ -1,12 +1,22 @@
-var assert = require('assert');
-var should = require('chai');
-const fs = require('fs');
+/*import assert from 'assert';
+import should from 'chai';
+import fs from 'fs/promises';
+//import fs from 'fs/promises';
+//var assert = require('assert');
+//var should = require('chai');
+//const fs = require('fs');
 
-const orphanSort = require('../orphans.js');
-const unzipSb3 = require('../sb3Unzipp.js');
-const parse = require('../parser.js');
-const count = require('../count.js');
+import orphanSort from '../src/orphans.js';
+import unzipSb3 from '../src/sb3Unzipp.js';
+import parse from '../src/parser.js';
+import count from '../src/count.js';
+//const orphanSort = require('../orphans.js');
+//const unzipSb3 = require('../sb3Unzipp.js');
+//const parse = require('../parser.js');
+//const count = require('../count.js');
 
+//import fs from 'fs/promises';
+*/
 describe('Array Baseline', function () {
   describe('#baseline()', function () {
     it('Should return -1 when the value is not present', function () {
@@ -17,16 +27,60 @@ describe('Array Baseline', function () {
 
 describe('Orphan result', function () {
   describe('#orphansFile()', function () {
-    var comparison = [['~jw3DbpuL|d@iR@0SAf8'], [
-      'Y+lihnBIOz7fD37Q=ZnK',
-      'B*gGxlI~MEZ9-Ju49%+x',
-      ']lV3}z3LwM/O1|B%v-6+',
-      'q*b=xBFg.TxzxJrLUW@S',
-      'Xk:b`skdY6nogJv.`JSG',
-      '$R].S$@Q4Q=ZZsnN/w$z'
+    var comparison = [[
+      {
+        opcode: 'looks_say',
+        next: null,
+        parent: null,
+        inputs: { MESSAGE: [Array] },
+        fields: {}
+      }
+    ], [
+      {
+        opcode: 'event_whenflagclicked',
+        next: null,
+        parent: null,
+        inputs: {},
+        fields: {}
+      },
+      {
+        opcode: 'event_whenkeypressed',
+        next: null,
+        parent: null,
+        inputs: {},
+        fields: { KEY_OPTION: [Array] }
+      },
+      {
+        opcode: 'event_whenstageclicked',
+        next: null,
+        parent: null,
+        inputs: {},
+        fields: {}
+      },
+      {
+        opcode: 'event_whenbackdropswitchesto',
+        next: null,
+        parent: null,
+        inputs: {},
+        fields: { BACKDROP: [Array] }
+      },
+      {
+        opcode: 'event_whengreaterthan',
+        next: null,
+        parent: null,
+        inputs: { VALUE: [Array] },
+        fields: { WHENGREATERTHANMENU: [Array] }
+      },
+      {
+        opcode: 'event_whenbroadcastreceived',
+        next: null,
+        parent: null,
+        inputs: {},
+        fields: { BROADCAST_OPTION: [Array] }
+      }
     ]]
     it('Should create an output file with expected contents', function () {
-      var result = orphanSort('/test/testFiles/output.json');
+      var result = orphanSort('/test/testFiles/output_ast.json');
       assert.deepEqual(result, comparison);
     });
   });

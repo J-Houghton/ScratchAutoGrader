@@ -27,6 +27,7 @@ console.log("CountDifferentBlockTypes(): " + diffAmount);
  * @param {*} type The type of block you want to count
  * @returns The amount of blocks of the specified type
  */
+/*
 function CountBlockPerType(json, type)
 {
     let blockAmount = 0;
@@ -48,7 +49,13 @@ function CountBlockPerType(json, type)
 
     return blockAmount;
 }
+*/
 
+/**
+ * Counts block types and puts them in a dictionary
+ * @param {A json file of an ast tree of the project} ast 
+ * @returns A dictionary with keys as block types and values as counts
+ */
 export function countBlockTypes(ast) {
     // Find all nodes of type 'Block'
     const allBlocks = ast.findAllNodes(node => node.type === 'Block');
@@ -62,6 +69,12 @@ export function countBlockTypes(ast) {
     return counts; // This object will have keys as block types and values as their counts
 }
 
+/**
+ * Checks to see if a criteria is in a block
+ * @param {Dictionary?} counts 
+ * @param {What you are checking that an opcode includes} criteria 
+ * @returns 
+ */
 export function countBlocksByOpcode(counts, criteria) {
     // Check if the criteria match the start or the whole of any opcode
     return Object.keys(counts)
@@ -69,7 +82,26 @@ export function countBlocksByOpcode(counts, criteria) {
         .reduce((total, key) => total + counts[key], 0);
 }
 
+/**
+ * Counts the amount of characters(sprites) in a scratch project
+ * @param {An ast tree of the scratch project} ast 
+ * @returns An integer of the amount of characters(sprites) a project has
+ */
+export function countCharacters(ast) {
+    const allTargets = ast.findAllNodes(node => node.type === 'Target');
 
+    let characterCount = 0;
+
+    console.log(allTargets);
+
+    allTargets.forEach(target => {
+        if (target.isStage === false) { characterCount++; }
+    })
+
+    return characterCount;
+}
+
+/*
 export function findOrphans(projectData) {
     const orphans = [];
     const nonOrphans = [];
@@ -129,3 +161,4 @@ export function findOrphans(projectData) {
         orphans
     };
 }
+*/

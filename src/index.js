@@ -3,7 +3,7 @@
  
 import { unzipSb3 } from './sb3Unzipp.js';
 import { Parser } from './parser.js';
-import { countBlockTypes, countBlocksByOpcode, findOrphans } from './count.js';
+import { countBlockTypes, countBlocksByOpcode, countCharacters/*, findOrphans */ } from './count.js';
 
 // Grab the file path from command-line arguments
 const filePath = process.argv[2]; 
@@ -33,9 +33,14 @@ unzipSb3(filePath)
                 console.log(`Count of blocks for opcode "${opcode}": `, count);
             });
 
+            const testCharacterCount = countCharacters(astRootNode);
+            console.log("Sprite Count: ", testCharacterCount);
+
+            /*
             const analysisResult = findOrphans(astRootNode);
             console.log("nonorphans: ", analysisResult.nonOrphans);
             console.log("orphans: ", analysisResult.orphans);
+            */
         } catch (error) {
             console.error("An error occurred during index.js: ", error);
         } 

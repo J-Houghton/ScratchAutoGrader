@@ -133,3 +133,4 @@ dist
 src/unzippedSb3/
 src/output.json
 src/output_ast.json
+src/output/*

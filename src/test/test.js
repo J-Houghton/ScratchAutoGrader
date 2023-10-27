@@ -51,7 +51,7 @@ describe('Unzipsb3 result', async function () {
 
 describe('Parser result', async function () {
   describe('#unzippedsb3File()', async function () {
-    it('Should find the project file when parsed', async function () {
+    it('Should verify the ast object when parsed', async function () {
       var filepath = await unzipSb3('sb3Files/3-hello1.sb3');
       const parser = new Parser(); 
       const astRootNode = await parser.parse(filepath);
@@ -60,7 +60,7 @@ describe('Parser result', async function () {
     });
   });
 });
-/*
+
 describe('Count result', function () {
   describe('#unzippedsb3File()', function () {
     it('Should return correct block type count', function () {
@@ -72,6 +72,7 @@ describe('Count result', function () {
     });
   });
 });
+
 /*
 describe('Count result', function () {
   describe('#unzippedsb3File()', function () {

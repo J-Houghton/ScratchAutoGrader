@@ -92,14 +92,34 @@ export function countCharacters(ast) {
 
     let characterCount = 0;
 
-    console.log(allTargets);
-
     allTargets.forEach(target => {
-        if (target.isStage === false) { characterCount++; }
+        if (target.data.isStage === false) { characterCount++; } 
     })
 
     return characterCount;
 }
+
+/*
+WIP
+export function seeCustomChanges(ast) {
+    const allTargets = ast.findAllNodes(node => node.type === 'Target');
+
+    let customChanges = {};
+
+    allTargets.forEach(target => {
+        //console.log(target);
+        //console.log(target.data.blocks);
+        target.data.blocks.forEach(block => {
+            if (block.data.opcode != undefined) { 
+                if (block.data.opcode == "looks_changeeffectby" || block.data.opcode == "looks_seteffectto") {
+                    let key = target.data.name;
+                    customChanges[key] = block.data.opcode;
+                }
+            }
+        })
+    })
+}
+*/
 
 /*
 export function findOrphans(projectData) {

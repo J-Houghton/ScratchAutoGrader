@@ -3,7 +3,7 @@
  
 import { unzipSb3 } from './sb3Unzipp.js';
 import { Parser } from './parser.js';
-import { countBlockTypes, countBlocksByOpcode, countCharacters/*, findOrphans */ } from './count.js';
+import { countBlockTypes, countBlocksByOpcode, countCharacters, seeCustomChanges/*,findOrphans */ } from './count.js';
 
 // Grab the file path from command-line arguments
 const filePath = process.argv[2]; 
@@ -18,23 +18,29 @@ unzipSb3(filePath)
         const parser = new Parser(); 
         try {
             const astRootNode = await parser.parse(unzippedFilePath);  
-            console.log(astRootNode);
+            //console.log(astRootNode);
             const counts = countBlockTypes(astRootNode);
-            console.log("Number of unique block types:", counts);
+            //console.log("Number of unique block types:", counts);
 
             const uniqueBlockCount = Object.keys(counts).length; 
-            console.log("Total unique block types: ", uniqueBlockCount);
+            //console.log("Total unique block types: ", uniqueBlockCount);
 
             // Test strings for opcode
-            const testOpcodes = ["control", "looks_nextcostume"];
+            //const testOpcodes = ["control", "looks_nextcostume"];
 
+            /*
             testOpcodes.forEach(opcode => {
                 const count = countBlocksByOpcode(counts, opcode);
                 console.log(`Count of blocks for opcode "${opcode}": `, count);
             });
+            */
 
+            /*
             const testCharacterCount = countCharacters(astRootNode);
             console.log("Sprite Count: ", testCharacterCount);
+            */
+
+            console.log(seeCustomChanges(astRootNode));
 
             /*
             const analysisResult = findOrphans(astRootNode);

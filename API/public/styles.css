@@ -1,0 +1,82 @@
+.opcode-group {
+    border: 1px solid black;
+    margin: 10px 0;
+    padding: 10px;
+    max-width: 360px; 
+    box-sizing: border-box;
+    transition: background-color 0.3s;
+}
+.opcode-title {
+    font-weight: bold;
+}
+.opcode-item {
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 4px;
+}
+
+/* Color definitions for each group */
+#group-Motion {
+    background-color: #81d4fa; 
+}
+#group-Motion .opcode-item {
+    background-color: #4fc3f7;
+}
+
+#group-Looks {
+    background-color: #b39ddb; 
+}
+#group-Looks .opcode-item {
+    background-color: #9575cd; 
+}
+
+#group-Sound {
+    background-color: #f8bbd0;
+}
+#group-Sound .opcode-item {
+    background-color: #f48fb1;
+}
+
+#group-Events {
+    background-color: #fff59d;
+}
+#group-Events .opcode-item {
+    background-color: #fff176;
+}
+
+#group-Control {
+    background-color: #ffb74d;
+}
+#group-Control .opcode-item {
+    background-color: #ffa726;
+}
+
+#group-Sensing {
+    background-color: #80deea;
+}
+#group-Sensing .opcode-item {
+    background-color: #4dd0e1;
+}
+
+#group-Operators {
+    background-color: #81c784;
+}
+#group-Operators .opcode-item {
+    background-color: #66bb6a;
+}
+
+#group-Data {
+    background-color: #ff8a65;
+}
+#group-Data .opcode-item {
+    background-color: #ff7043;
+}
+
+#group-Music,
+#group-Pen {
+    background-color: #80cbc4;
+}
+#group-Music .opcode-item,
+#group-Pen .opcode-item {
+    background-color: #4db6ac;
+}

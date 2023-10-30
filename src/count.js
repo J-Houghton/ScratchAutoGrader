@@ -101,23 +101,47 @@ export function countCharacters(ast) {
 
 /*
 WIP
+export function countStages(ast)
+{
+    const allTargets = ast.findAllNodes(node => node.type === 'Target')
+
+    let stageCount = 0;
+
+    allTargets.forEach(target => {
+        if (target.data.isStage === true) { stageCount++; }
+    })
+    
+    const project = ast.root;
+    const childArray = project.children;
+
+    for (let i = 0; i < childArray.length; i++) { 
+        console.log(childArray[i])
+        if (childArray[i].data.isStage === true) { stageCount++; }
+    }
+
+    return stageCount;
+}
+*/
+/*
 export function seeCustomChanges(ast) {
     const allTargets = ast.findAllNodes(node => node.type === 'Target');
 
     let customChanges = {};
 
     allTargets.forEach(target => {
-        //console.log(target);
-        //console.log(target.data.blocks);
+        console.log(target.data.name);
+        console.log(target.data.blocks);
         target.data.blocks.forEach(block => {
             if (block.data.opcode != undefined) { 
-                if (block.data.opcode == "looks_changeeffectby" || block.data.opcode == "looks_seteffectto") {
+                if (block.data.opcode === "looks_changeeffectby" || block.data.opcode === "looks_seteffectto") {
                     let key = target.data.name;
                     customChanges[key] = block.data.opcode;
                 }
             }
         })
     })
+
+    return customChanges;
 }
 */
 

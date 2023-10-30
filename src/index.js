@@ -3,7 +3,7 @@
  
 import { unzipSb3 } from './sb3Unzipp.js';
 import { Parser } from './parser.js';
-import { countBlockTypes, countBlocksByOpcode, countCharacters, seeCustomChanges/*,findOrphans */ } from './count.js';
+import { countBlockTypes, countBlocksByOpcode, countCharacters, /*countStages,*/ seeCustomChanges/*,findOrphans */ } from './count.js';
 
 // Grab the file path from command-line arguments
 const filePath = process.argv[2]; 
@@ -40,7 +40,9 @@ unzipSb3(filePath)
             console.log("Sprite Count: ", testCharacterCount);
             */
 
-            console.log(seeCustomChanges(astRootNode));
+            //console.log(seeCustomChanges(astRootNode));
+
+            console.log("Stage Count: " + countStages(astRootNode));
 
             /*
             const analysisResult = findOrphans(astRootNode);

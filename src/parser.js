@@ -43,14 +43,14 @@ export class Parser {
 
         projectData.targets.forEach(targetData => {
             const target = new Target(targetData);
-            project.addTarget(target);
+            //project.addTarget(target);
 
             const targetNode = new Node('Target', target);
             rootNode.addChild(targetNode);
 
             Object.values(targetData.blocks).forEach(blockData => {
                 const block = new Block(blockData);
-                target.addBlock(block);
+                //target.addBlock(block);
 
                 const blockNode = new Node('Block', block);
                 targetNode.addChild(blockNode);

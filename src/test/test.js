@@ -24,18 +24,17 @@ describe('Array Baseline', function () {
 // Compares orphans output to given output from using 3-hello1.sb3
 describe('Orphan result', function () {
   describe('#orphansFile()', function () {
-    var comparison = [
-      [{"opcode":"looks_say","next":null,"parent":null,"inputs":{"MESSAGE":[1,[10,"Hello!"]]},"fields":{}}],
-      [{"opcode":"event_whenflagclicked","next":null,"parent":null,"inputs":{},"fields":{}},{"opcode":"event_whenkeypressed",
-      "next":null,"parent":null,"inputs":{},"fields":{"KEY_OPTION":["space",null]}},{"opcode":"event_whenstageclicked","next":null,
-      "parent":null,"inputs":{},"fields":{}},{"opcode":"event_whenbackdropswitchesto","next":null,"parent":null,"inputs":{},
-      "fields":{"BACKDROP":["backdrop1",null]}},{"opcode":"event_whengreaterthan","next":null,"parent":null,"inputs":{"VALUE":[1,[4,"10"]]},
-      "fields":{"WHENGREATERTHANMENU":["LOUDNESS",null]}},{"opcode":"event_whenbroadcastreceived","next":null,"parent":null,
-      "inputs":{},"fields":{"BROADCAST_OPTION":["message1","~74LMZ1TPu$[YfyU2p^M"]}}]
-    ]
+    var comparison = [[{"opcode":"looks_say","next":null,"parent":null,"inputs":{"MESSAGE":[1,[10,"Hello!"]]},"fields":{}}],
+    [{"opcode":"event_whenflagclicked","next":null,"parent":null,"inputs":{},"fields":{}},
+    {"opcode":"event_whenkeypressed","next":null,"parent":null,"inputs":{},"fields":{"KEY_OPTION":["space",null]}},
+    {"opcode":"event_whenstageclicked","next":null,"parent":null,"inputs":{},"fields":{}},
+    {"opcode":"event_whenbackdropswitchesto","next":null,"parent":null,"inputs":{},"fields":{"BACKDROP":["backdrop1",null]}},
+    {"opcode":"event_whengreaterthan","next":null,"parent":null,"inputs":{"VALUE":[1,[4,"10"]]},"fields":{"WHENGREATERTHANMENU":["LOUDNESS",null]}},
+    {"opcode":"event_whenbroadcastreceived","next":null,"parent":null,"inputs":{},"fields":{"BROADCAST_OPTION":["message1","~74LMZ1TPu$[YfyU2p^M"]}}]]
     it('Should create an output file with expected contents', function () {
       var result = orphanSort('/src/test/testFiles/output_ast.json');
-      console.info(result);
+      //console.info(result);
+      //console.info(JSON.stringify(result));
       assert.deepEqual(result, comparison);
     });
   });

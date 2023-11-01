@@ -2,6 +2,7 @@ import JSZip from 'jszip';
 import fs from 'fs-extra';
 
 export async function unzipSb3(filePath) {
+
     // Load the .sb3 file
     const data = await fs.readFile(filePath);
     console.log(filePath);

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scratch Auto-Grader</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Upload a .sb3 file</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".sb3">
+        <input type="submit" value="Upload and Analyze">
+    </form>
+    <div id="results">
+        <!-- Results will be dynamically generated and displayed here -->
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

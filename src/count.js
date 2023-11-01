@@ -83,67 +83,67 @@ export function countBlocksByOpcode(counts, criteria) {
 }
 
 /**
- * Counts the amount of characters(sprites) in a scratch project
+ * Counts the amount of characters(sprites) in a scratch project that have correct code
  * @param {An ast tree of the scratch project} ast 
  * @returns An integer of the amount of characters(sprites) a project has
  */
 export function countCharacters(ast) {
     const allTargets = ast.findAllNodes(node => node.type === 'Target');
 
-    let characterCount = 0;
+    let validCharacterCount = 0;
 
     allTargets.forEach(target => {
-        if (target.data.isStage === false) { characterCount++; } 
-    })
+        if (target.data.isStage === false) 
+        { 
+            console.log("Sprite: " + target.data.name);
+            let blockArray = returnTargetBlocks(target);   
+            if (checkCode(blockArray) === true) { validCharacterCount++; }
+        }       
+    });
 
-    return characterCount;
+    return validCharacterCount;
 }
 
-/*
-WIP
-export function countStages(ast)
-{
-    const allTargets = ast.findAllNodes(node => node.type === 'Target')
+// export function countStages(ast)
+// {
+//     const allTargets = ast.findAllNodes(node => node.type === 'Target')
 
-    let stageCount = 0;
+//     let stageCount = 0;
 
-    allTargets.forEach(target => {
-        if (target.data.isStage === true) { stageCount++; }
-    })
-    
-    const project = ast.root;
-    const childArray = project.children;
+//     allTargets.forEach(target => {
+//         if (target.data.isStage === true) { stageCount++; }
+//     })
 
-    for (let i = 0; i < childArray.length; i++) { 
-        console.log(childArray[i])
-        if (childArray[i].data.isStage === true) { stageCount++; }
-    }
+//     /*
+//     for (let i = 0; i < childArray.length; i++) { 
+//         //console.log(childArray[i])
+//         if (childArray[i].data.isStage === true) { stageCount++; }
+//     }
+//     */
 
-    return stageCount;
-}
-*/
-/*
-export function seeCustomChanges(ast) {
-    const allTargets = ast.findAllNodes(node => node.type === 'Target');
+//     return stageCount;
+// }
 
-    let customChanges = {};
+// export function seeCustomChanges(ast) {
+//     const allTargets = ast.findAllNodes(node => node.type === 'Target');
 
-    allTargets.forEach(target => {
-        console.log(target.data.name);
-        console.log(target.data.blocks);
-        target.data.blocks.forEach(block => {
-            if (block.data.opcode != undefined) { 
-                if (block.data.opcode === "looks_changeeffectby" || block.data.opcode === "looks_seteffectto") {
-                    let key = target.data.name;
-                    customChanges[key] = block.data.opcode;
-                }
-            }
-        })
-    })
+//     let customChanges = {};
 
-    return customChanges;
-}
-*/
+//     allTargets.forEach(target => {
+//         //console.log(target.data.name);
+//         //console.log(target.data.blocks);
+//         target.data.blocks.forEach(block => {
+//             if (block.data.opcode != undefined) { 
+//                 if (block.data.opcode === "looks_changeeffectby" || block.data.opcode === "looks_seteffectto") {
+//                     let key = target.data.name;
+//                     customChanges[key] = block.data.opcode;
+//                 }
+//             }
+//         })
+//     })
+
+//     return customChanges;
+// }
 
 /*
 export function findOrphans(projectData) {
@@ -206,3 +206,57 @@ export function findOrphans(projectData) {
     };
 }
 */
+
+/**
+ * Gets all the code blocks in a specific target (Stage or Sprite)
+ * @param {The target you are trying to get the code blocks of} targetNode 
+ * @returns An array of code blocks for the specified target
+ */
+function returnTargetBlocks(targetNode)
+{
+    let targetBlocks = new Array();
+
+    targetNode.children.forEach(child => {
+        if (child.type === "Block") { targetBlocks.push(child); }
+    })
+
+    return targetBlocks;
+}
+
+/** WIP
+ * Checks to see if the code has an event block and a motion, looks, or sound block
+ * @param {An array of blocks for a target} blockArray 
+ * @returns True or false of whether the code is valid
+ */
+function checkCode(blockArray)
+{
+    let counts = {};
+
+    counts["motionCount"] = 0;
+    counts["looksCount"] = 0;
+    counts["soundCount"] = 0;
+    counts["eventCount"] = 0;
+
+    blockArray.forEach(block => {
+        console.log("Block Parent: " + block.data.parent);
+        if (block.data.parent != null)
+        {
+            if (block.data.opcode.startsWith("motion") && counts["motionCount"] === 0) { counts["motionCount"]++; }
+            if (block.data.opcode.startsWith("looks") && counts["looksCount"] === 0) { counts["looksCount"]++; }
+            if (block.data.opcode.startsWith("sound") && counts["soundCount"] === 0) { counts["soundCount"]++; }      
+        }
+
+        if (block.data.opcode.startsWith("event") && counts["eventCount"] === 0) { counts["eventCount"]++; }
+    });
+
+    console.log(counts);
+
+    let subTotalCount = 0;
+
+    subTotalCount += counts["motionCount"];
+    subTotalCount += counts["looksCount"];
+    subTotalCount += counts["soundCount"];
+
+    if (counts["eventCount"] === 1 && subTotalCount > 0) { return true; }
+    else { return false; }
+}

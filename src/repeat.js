@@ -79,12 +79,13 @@ export function checkIncorrectRepeatUsage(repeatBlocks) { //can pass parameters 
     // if there is a repeat x inside of a repeat x without addtion logic between the two
     // if there is a forever inside of repeat x without addtion logic between the two
     //  If there is a 'repeat x' inside of a 'forever' loop without additional logic between the two. 
-
+    
     //combined ideas from above
     // If there is a 'repeat x', 'forever', or 'repeat until' nested inside another 'repeat x', 'forever', or 'repeat until' without additional logic between the two.
     // If there are nested 'forever' blocks, there has to be a 'stop' block for the inner block.
     // Nested 'repeat' or 'forever' loops should be able to exit.
     // Empty 'repeat' or 'forever' blocks or blocks that only contain non-functional elements such as comments or disabled blocks should be avoided.
+    
     //return issues.length > 0 ? issues : null; 
 }
 

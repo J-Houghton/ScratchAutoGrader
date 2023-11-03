@@ -6,6 +6,56 @@ export function checkRepeatExists(astRootNode) {
     return repeatBlocks.length > 0 ? repeatBlocks : null;
 }
 
+export function checkIncorrectRepeatUsage(repeatBlocks) {
+    const issues = [];
+  
+    // Check for nested forever blocks without additional blocks for logic between the two.
+    repeatBlocks.forEach(repeatBlock => {
+      const foreverBlocks = repeatBlock.findAllNodes(node => node.data.opcode === 'control_forever');
+      if (foreverBlocks.length > 1) {
+        issues.push({
+          code: 'nested_forever_blocks',
+          message: 'Nested forever blocks should have additional blocks for logic between the two.',
+        });
+      }
+    });
+  
+    // Check for repeat x blocks inside of forever loops without additional logic between the two.
+    repeatBlocks.forEach(repeatBlock => {
+      const repeatXBlocks = repeatBlock.findAllNodes(node => node.data.opcode === 'control_repeat');
+      if (repeatXBlocks.length > 0 && repeatBlock.data.opcode === 'control_forever') {
+        issues.push({
+          code: 'repeat_x_inside_forever_loop',
+          message: 'Repeat x blocks inside of forever loops should have additional logic between the two.',
+        });
+      }
+    });
+  
+    // Check for nested repeat x blocks without additional logic between the two.
+    repeatBlocks.forEach(repeatBlock => {
+      const nestedRepeatXBlocks = repeatBlock.findAllNodes(node => node.data.opcode === 'control_repeat');
+      if (nestedRepeatXBlocks.length > 1) {
+        issues.push({
+          code: 'nested_repeat_x_blocks',
+          message: 'Nested repeat x blocks should have additional logic between the two.',
+        });
+      }
+    });
+  
+    // Check for forever blocks inside of repeat x blocks without additional logic between the two.
+    repeatBlocks.forEach(repeatBlock => {
+      const foreverBlocks = repeatBlock.findAllNodes(node => node.data.opcode === 'control_forever');
+      if (foreverBlocks.length > 0 && repeatBlock.data.opcode === 'control_repeat') {
+        issues.push({
+          code: 'forever_inside_repeat_x_block',
+          message: 'Forever blocks inside of repeat x blocks should have additional logic between the two.',
+        });
+      }
+    });
+  
+    return issues.length > 0 ? issues : null;
+  }
+
 export function checkIncorrectRepeatUsage(repeatBlocks) { //can pass parameters of array of repeat blocks
     // if there is a forever inside of repeat x and no stop block
     

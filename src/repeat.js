@@ -79,10 +79,12 @@ export function checkIncorrectRepeatUsage(repeatBlocks) { //can pass parameters 
     // if there is a repeat x inside of a repeat x without addtion logic between the two
     // if there is a forever inside of repeat x without addtion logic between the two
     //  If there is a 'repeat x' inside of a 'forever' loop without additional logic between the two. 
-    
+
     //combined ideas from above
     // If there is a 'repeat x', 'forever', or 'repeat until' nested inside another 'repeat x', 'forever', or 'repeat until' without additional logic between the two.
+    
     // If there are nested 'forever' blocks, there has to be a 'stop' block for the inner block.
+    
     // Nested 'repeat' or 'forever' loops should be able to exit.
     // Empty 'repeat' or 'forever' blocks or blocks that only contain non-functional elements such as comments or disabled blocks should be avoided.
     
@@ -99,8 +101,16 @@ function checkRepeatUntilUsage(astRootNode) {
 
 //need to use along side of checkIncorrectRepeatUsage, if used all repeat correct(maybe above function return true) 
 //then check if there is only one children for repeat that is not another control block? 
-export function checkSingleBlockInsideOfRepeat(astRootNode) { //can pass parameters of array of repeat blocks
-    
+export function checkSingleBlockInsideOfRepeat(repeatBlocks) { //can pass parameters of array of repeat blocks
+    const issues = [];
+  
+    // Check for nested forever blocks without additional blocks for logic between the two.
+    repeatBlocks.forEach(repeatBlock => {
+      const foreverBlocks = repeatBlock.findAllNodes(node => node.data.opcode === 'control_forever');
+      if (repeatBlock.children.length == 1) {
+        return true;
+      }
+    });
 }
 
 //same as above but more than one children?, below function might not be needed if above reutrns true and false, multiple blocks inside of repeat not counting control(repeat) blocks.

@@ -43,7 +43,8 @@ unzipSb3(filePath)
                 console.log(`Count of blocks for opcode "${opcode}": `, count);
             });
 
-            orphanSort('output_ast.json');
+            orphanSort(astRootNode);
+
         } catch (error) {
             console.error("An error occurred during index.js: ", error);
         } 

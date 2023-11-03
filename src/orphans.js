@@ -8,7 +8,7 @@ export function orphanSort(filePath)
     //const filePath = process.argv[2]; 
 
     if (!filePath) {
-        console.error("Please provide a file path as an argument.");
+        console.error("Please provide an ast tree or file path as an argument.");
         process.exit(1);
     }
     //const data = require('./' + filePath);
@@ -16,13 +16,21 @@ export function orphanSort(filePath)
     //import data from aggg;
     //const data = astRootNode;
     //import data from './output_ast.json' assert {type = JSON};
-    console.log(data);
+
+    var targets;
+
+    if(typeof filePath == "object"){
+        targets = filePath.root.data.targets;
+    }
+    else{
+        targets = data.default.data.targets;
+    }
 
     const orphans = [];
     const nonOrphans = [];
     const unDecided = [];
 
-    const targets = data.default.data.targets;
+    //const targets = root.default.data.targets;
     console.log(targets[0].blocks);
 
     for (let i = 0; i < targets.length; i++) {

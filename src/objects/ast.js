@@ -25,6 +25,13 @@ export class Node {
     // No need for a 'getParent' method as we can directly access the 'parent' property of a Node
     //getPath
     //getSubtree
+    getTarget() {
+        if (this.type === 'Target') {
+            return this.data;
+        } else {
+            return this.parent.getTarget();
+        }
+    }
     
     toJSON() {
         // We're not serializing the 'parent' field here to avoid circular references in the resulting JSON

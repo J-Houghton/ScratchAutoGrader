@@ -34,32 +34,69 @@ export class Parser {
         }
     }
 
-
     buildAST(projectData) {
         const project = new Project();
-
+    
         // Create the root node of the AST with the project data
         const rootNode = new Node('Project', project);
-
+    
         projectData.targets.forEach(targetData => {
             const target = new Target(targetData);
-            //project.addTarget(target);
-
             const targetNode = new Node('Target', target);
             rootNode.addChild(targetNode);
-
-            Object.values(targetData.blocks).forEach(blockData => {
+    
+            // First, create all block nodes and add them to a map for easy reference
+            const blockMap = new Map();
+            Object.entries(targetData.blocks).forEach(([blockId, blockData]) => {
                 const block = new Block(blockData);
-                //target.addBlock(block);
-
                 const blockNode = new Node('Block', block);
-                targetNode.addChild(blockNode);
+                blockMap.set(blockId, blockNode);
+            });
+    
+            // Now set up the parent-child relationships
+            blockMap.forEach((blockNode, blockId) => {
+                const blockData = targetData.blocks[blockId];
+                if (blockData.parent) {
+                    const parentNode = blockMap.get(blockData.parent);
+                    if (parentNode) {
+                        parentNode.addChild(blockNode);
+                    }
+                } else {
+                    // If there is no parent, this is a top-level block in this target
+                    targetNode.addChild(blockNode);
+                }
             });
         });
-
+    
         // Create an AST with the root node
         return new AST(rootNode);
     }
+
+    // buildAST(projectData) {
+    //     const project = new Project();
+
+    //     // Create the root node of the AST with the project data
+    //     const rootNode = new Node('Project', project);
+
+    //     projectData.targets.forEach(targetData => {
+    //         const target = new Target(targetData);
+    //         //project.addTarget(target);
+
+    //         const targetNode = new Node('Target', target);
+    //         rootNode.addChild(targetNode);
+            
+    //         Object.values(targetData.blocks).forEach(blockData => {
+    //             const block = new Block(blockData);
+    //             //target.addBlock(block);
+
+    //             const blockNode = new Node('Block', block);
+    //             targetNode.addChild(blockNode);
+    //         });
+    //     });
+    //     //console.log('Root Node Children:', rootNode.children);
+    //     // Create an AST with the root node
+    //     return new AST(rootNode);
+    // }
 
     async writeASTToFile(ast) {
         try {

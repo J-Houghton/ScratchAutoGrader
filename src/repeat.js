@@ -7,89 +7,114 @@ export function checkRepeatExists(astRootNode) {
 }
 
 export function checkIncorrectRepeatUsage(repeatBlocks) {
-    const issues = [];
-  
-    // Check for nested forever blocks without additional blocks for logic between the two.
-    repeatBlocks.forEach(repeatBlock => {
-      const foreverBlocks = repeatBlock.findAllNodes(node => node.data.opcode === 'control_forever');
-      if (foreverBlocks.length > 1) {
-        issues.push({
-          code: 'nested_forever_blocks',
-          message: 'Nested forever blocks should have additional blocks for logic between the two.',
-        });
+    const issues = []; 
+
+    repeatBlocks.forEach(repeatBlock => { 
+      const target = repeatBlock.getTarget();
+      let targetName = target.name;
+      // Check for empty loops or loops with only non-functional elements.
+      if (isLoopEmptyOrNonFunctional(repeatBlock)) {
+        const controlBlockName = getControlBlockName(repeatBlock.data.opcode);
+        const errorMessage = `The ${controlBlockName} control block from ${targetName} is empty or contains only non-functional elements.`;
+        issues.push({ code: 'empty_or_non_functional_loop', message: errorMessage });
+      } else if (repeatBlock.data.opcode === 'control_forever') {  // If there are nested 'forever' blocks, there has to be a 'stop' block for the inner block.
+        const hasNestedForeverWithoutStop = findNestedControlForeverWithoutStop(repeatBlock);
+        if (hasNestedForeverWithoutStop) { 
+          const errorMessage = `The ${targetName} have nested forever blocks without a stop block`;
+          issues.push({ code: 'nested_forever_without_stop', message: errorMessage });
+        }
+      }  
+
+      if (['control_repeat', 'control_forever'].includes(repeatBlock.data.opcode)) { //'repeat' or 'forever' loops should be able to exit. 
+        const canExit = checkForExitCondition(repeatBlock);
+        if (!canExit) { 
+          const errorMessage = `The ${targetName} block should be able to exit.`;
+          issues.push({ code: 'no_exit_condition', message: errorMessage });
+        }
       }
+      //Empty 'repeat' or 'forever' blocks or blocks that only contain non-functional elements such as comments or disabled blocks should be avoided.
     });
-  
-    // Check for repeat x blocks inside of forever loops without additional logic between the two.
-    repeatBlocks.forEach(repeatBlock => {
-      const repeatXBlocks = repeatBlock.findAllNodes(node => node.data.opcode === 'control_repeat');
-      if (repeatXBlocks.length > 0 && repeatBlock.data.opcode === 'control_forever') {
-        issues.push({
-          code: 'repeat_x_inside_forever_loop',
-          message: 'Repeat x blocks inside of forever loops should have additional logic between the two.',
-        });
-      }
-    });
-  
-    // Check for nested repeat x blocks without additional logic between the two.
-    repeatBlocks.forEach(repeatBlock => {
-      const nestedRepeatXBlocks = repeatBlock.findAllNodes(node => node.data.opcode === 'control_repeat');
-      if (nestedRepeatXBlocks.length > 1) {
-        issues.push({
-          code: 'nested_repeat_x_blocks',
-          message: 'Nested repeat x blocks should have additional logic between the two.',
-        });
-      }
-    });
-  
-    // Check for forever blocks inside of repeat x blocks without additional logic between the two.
-    repeatBlocks.forEach(repeatBlock => {
-      const foreverBlocks = repeatBlock.findAllNodes(node => node.data.opcode === 'control_forever');
-      if (foreverBlocks.length > 0 && repeatBlock.data.opcode === 'control_repeat') {
-        issues.push({
-          code: 'forever_inside_repeat_x_block',
-          message: 'Forever blocks inside of repeat x blocks should have additional logic between the two.',
-        });
-      }
-    });
-  
+    
+
+
     return issues.length > 0 ? issues : null;
+}
+
+//Do not need to implement for control_forever, already checking exit conditon for nested forever blocks
+//a single forever loop might be aimed to run indefinitely, but if there is a nested forever block, it should be able to exit
+function checkForExitCondition(block) {
+  return true;
+}
+
+function isLoopEmptyOrNonFunctional(block) {
+  if (block.children.length === 0 || block.children.every(isNonFunctionalBlock)) {
+    return true;
+  }
+  return false;
+}
+
+function getControlBlockName(opcode) {
+  const opcodeNames = {
+    'control_forever': 'forever',
+    'control_repeat_until': 'repeat until',
+    'control_repeat': 'repeat x'
+  }; 
+  return opcodeNames[opcode] || 'unknown block';
+}
+
+function isNonFunctionalBlock(block) { 
+  // NEED to define other non-functional blocks
+  return block.data.opcode === "comment";
+}
+
+function findNestedControlForeverWithoutStop(block, depth = 0) {
+  // Check if the block is a 'control_forever' and has children
+  if (block.data && block.data.opcode === "control_forever") {
+    // found a 'control_forever', now check for nested 'control_forever' without a 'stop' recursively
+    const hasNestedForeverWithoutStop = block.children.some(child => checkForNestedForeverWithoutStop(child, depth + 1));
+    if (hasNestedForeverWithoutStop) {
+      return true;
+    }
+  } else if (block.children) {
+    // If this is not a 'control_forever' block, recursively check its children
+    for (const child of block.children) {
+      if (findNestedControlForeverWithoutStop(child, depth + 1)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+//When findNestedControlForeverWithoutStop encounters a control_forever block, it calls checkForNestedForeverWithoutStop on its children.
+//checkForNestedForeverWithoutStop looks for a nested control_forever among all children, going deeper into each layer.
+//If a control_forever is found by checkForNestedForeverWithoutStop, it uses findStopBlock to check for a stop block among all its children, going deeper into each layer.
+function checkForNestedForeverWithoutStop(block, depth) {
+  // If we find a nested 'control_forever' block, check for absence of 'stop' blocks in its children
+  if (block.data && block.data.opcode === "control_forever") {
+    return !block.children || !block.children.some(child => findStopBlock(child, depth + 1));
+  } else if (block.children) {
+    // Otherwise, keep looking in its children
+    return block.children.some(child => checkForNestedForeverWithoutStop(child, depth + 1));
   }
 
-export function checkIncorrectRepeatUsage(repeatBlocks) { //can pass parameters of array of repeat blocks
-    // if there is a forever inside of repeat x and no stop block
-    
-    repeatBlocks.forEach(nodeBlock => {
-        if (nodeBlock.data.opcode === 'control_repeat' || nodeBlock.data.opcode === 'control_repeat_until') {
-            const foreverBlocks = nodeBlock.findAllNodes(node => {
-                return node.data.opcode === 'control_forever';
-            });
-            if (foreverBlocks.length > 0) {
-                return true;
-            }
-        }
-        if (nodeBlock.data.opcode === 'control_forever') {
-            // if there is nested forever blocks without additional blocks for logic between the two
-            // if there is a repeat x inside of a forever loop without addtion logic between the two
-            //if there are nested forever blocks, there has to be a stop block for the inner block, (if there are nested forever with stop for inner, sholdn't user use forever with nested repeat?)
-        }
-    });
-    // nested repeat loops should be able to exit 
-    // should not have have empty repeat/forever blocks or only contain non functional blocks such as comments of disabled blocks
-    // if there is a repeat x inside of a repeat x without addtion logic between the two
-    // if there is a forever inside of repeat x without addtion logic between the two
-    //  If there is a 'repeat x' inside of a 'forever' loop without additional logic between the two. 
-
-    //combined ideas from above
-    // If there is a 'repeat x', 'forever', or 'repeat until' nested inside another 'repeat x', 'forever', or 'repeat until' without additional logic between the two.
-    
-    // If there are nested 'forever' blocks, there has to be a 'stop' block for the inner block.
-    
-    // Nested 'repeat' or 'forever' loops should be able to exit.
-    // Empty 'repeat' or 'forever' blocks or blocks that only contain non-functional elements such as comments or disabled blocks should be avoided.
-    
-    //return issues.length > 0 ? issues : null; 
+  return false;
 }
+
+function findStopBlock(block, depth) {
+  // Check if this block is a 'stop' block
+  if (block.data && block.data.opcode === "control_stop") { 
+    return true;
+  }
+
+  // Recursively check the children for a 'stop' block
+  if (block.children) {
+    return block.children.some(child => findStopBlock(child, depth + 1));
+  }
+
+  return false;
+}
+
 
 function checkRepeatUntilUsage(astRootNode) {
     // Get all 'control_repeat_until' blocks from the AST

@@ -5,6 +5,7 @@ import { unzipSb3 } from './sb3Unzipp.js';
 import { Parser } from './parser.js';
 import { countBlockTypes, countBlocksByOpcode, findOrphans } from './count.js';
 import { orphanSort } from './orphans.js';
+import { checkParallelism } from './parallelism.js';
 
 // Grab the file path from command-line arguments
 const filePath = process.argv[2]; 
@@ -44,6 +45,8 @@ unzipSb3(filePath)
             });
 
             orphanSort(astRootNode);
+
+            checkParallelism(astRootNode);
 
         } catch (error) {
             console.error("An error occurred during index.js: ", error);

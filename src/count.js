@@ -124,26 +124,30 @@ export function countCharacters(ast) {
 //     return stageCount;
 // }
 
-// export function seeCustomChanges(ast) {
-//     const allTargets = ast.findAllNodes(node => node.type === 'Target');
+export function seeCustomChanges(ast) {
+    const allTargets = ast.findAllNodes(node => node.type === 'Target');
 
-//     let customChanges = {};
+    let customChanges = new Array();
 
-//     allTargets.forEach(target => {
-//         //console.log(target.data.name);
-//         //console.log(target.data.blocks);
-//         target.data.blocks.forEach(block => {
-//             if (block.data.opcode != undefined) { 
-//                 if (block.data.opcode === "looks_changeeffectby" || block.data.opcode === "looks_seteffectto") {
-//                     let key = target.data.name;
-//                     customChanges[key] = block.data.opcode;
-//                 }
-//             }
-//         })
-//     })
+    allTargets.forEach(target => {
 
-//     return customChanges;
-// }
+        let blockArray = returnTargetBlocks(target);
+        // console.log(target.data.name);
+        // console.log(target.data.blocks);
+        blockArray.forEach(block => {
+            if (block.data.opcode != undefined) { 
+                if (block.data.opcode === "looks_changeeffectby" || block.data.opcode === "looks_seteffectto") {
+                    // console.log(block.data.fields.EFFECT[0]);
+                    checkForEventBlock(block);
+                    let newString = target.data.name + ": " + block.data.opcode + " - " + block.data.fields.EFFECT[0]; 
+                    customChanges.push(newString);
+                }
+            }
+        })
+    })
+
+    return customChanges;
+}
 
 /*
 export function findOrphans(projectData) {
@@ -223,40 +227,45 @@ function returnTargetBlocks(targetNode)
     return targetBlocks;
 }
 
-/** WIP
+/** 
  * Checks to see if the code has an event block and a motion, looks, or sound block
  * @param {An array of blocks for a target} blockArray 
  * @returns True or false of whether the code is valid
  */
 function checkCode(blockArray)
 {
-    let counts = {};
-
-    counts["motionCount"] = 0;
-    counts["looksCount"] = 0;
-    counts["soundCount"] = 0;
-    counts["eventCount"] = 0;
+    // Creates a 
+    let subTotalCount = 0;
+    let eventCount = 0; 
 
     blockArray.forEach(block => {
-        console.log("Block Parent: " + block.data.parent);
         if (block.data.parent != null)
         {
-            if (block.data.opcode.startsWith("motion") && counts["motionCount"] === 0) { counts["motionCount"]++; }
-            if (block.data.opcode.startsWith("looks") && counts["looksCount"] === 0) { counts["looksCount"]++; }
-            if (block.data.opcode.startsWith("sound") && counts["soundCount"] === 0) { counts["soundCount"]++; }      
+            if (!block.data.opcode.endsWith("menu"))
+            {
+                if (block.data.opcode.startsWith("motion")) { subTotalCount++; }
+                if (block.data.opcode.startsWith("looks")) { subTotalCount++; }
+                if (block.data.opcode.startsWith("sound")) { subtotalCount++; }      
+            }
         }
 
-        if (block.data.opcode.startsWith("event") && counts["eventCount"] === 0) { counts["eventCount"]++; }
+        if (block.data.opcode.startsWith("event")) { eventCount++; }
     });
 
-    console.log(counts);
-
-    let subTotalCount = 0;
-
-    subTotalCount += counts["motionCount"];
-    subTotalCount += counts["looksCount"];
-    subTotalCount += counts["soundCount"];
-
-    if (counts["eventCount"] === 1 && subTotalCount > 0) { return true; }
+    if (eventCount > 0 && subTotalCount > 0) 
+    { 
+        return true;
+    }
     else { return false; }
+}
+
+function checkForEventBlock(block)
+{
+    console.log("Checking for event block:" + block.data.parent);
+    if (block.data.parent === null) 
+    { 
+        if (block.data.opcode.startsWith("event")) { console.log(block.data.opcode); return true; }
+        else { return false; }
+    }
+    else { checkForEventBlock(block.parent); } 
 }

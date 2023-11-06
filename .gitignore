@@ -134,3 +134,9 @@ src/unzippedSb3/
 src/output.json
 src/output_ast.json
 src/output/*
+
+# API 
+API/node_modules/
+API/unzippedSb3/*
+API/package-lock.json
+API/output_ast.json

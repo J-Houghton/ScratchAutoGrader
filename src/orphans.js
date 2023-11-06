@@ -45,7 +45,7 @@ export function orphanSort(filePath)
             var parent = blocks[name]['parent'];
             //if(toplevel == true)
             if(parent == null){
-                if(opcode == 'event_whenflagclicked' || opcode == 'event_whenkeypressed' || opcode == 'event_whenstageclicked' 
+                if(opcode == 'event_whenflagclicked' || opcode == 'event_whenkeypressed' || opcode == 'event_whenstageclicked' || 'control_start_as_clone'
                 || opcode == 'event_whenbackdropswitchesto' || opcode == 'event_whengreaterthan' || opcode == 'event_whenbroadcastreceived'){
                     //console.log(name + " is nonorphan!");
                     nonOrphans.push(blocks[name]);

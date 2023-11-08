@@ -4,6 +4,7 @@
 import { unzipSb3 } from './sb3Unzipp.js';
 import { Parser } from './parser.js';
 import { countBlockTypes, countBlocksByOpcode, findOrphans } from './count.js';
+import { checkRepeatExists, checkIncorrectRepeatUsage } from './repeat.js';
 import { orphanSort } from './orphans.js';
 
 // Grab the file path from command-line arguments
@@ -28,21 +29,32 @@ unzipSb3(filePath)
         const parser = new Parser(); 
         try {
             const astRootNode = await parser.parse(unzippedFilePath);  
-            console.log(astRootNode);
-            const counts = countBlockTypes(astRootNode);
-            console.log("Number of unique block types:", counts);
+            //console.log(astRootNode); 
+            // const counts = countBlockTypes(astRootNode);
+            // console.log("Number of unique block types:", counts);
 
-            const uniqueBlockCount = Object.keys(counts).length; 
-            console.log("Total unique block types: ", uniqueBlockCount);
+            // const uniqueBlockCount = Object.keys(counts).length; 
+            // console.log("Total unique block types: ", uniqueBlockCount);
 
-            // Test strings for opcode
-            const testOpcodes = ["control", "looks_nextcostume"];
+            // // Test strings for opcode
+            // const testOpcodes = ["control", "looks_nextcostume"];
 
-            testOpcodes.forEach(opcode => {
-                const count = countBlocksByOpcode(counts, opcode);
-                console.log(`Count of blocks for opcode "${opcode}": `, count);
+            // testOpcodes.forEach(opcode => {
+            //     const count = countBlocksByOpcode(counts, opcode);
+            //     console.log(`Count of blocks for opcode "${opcode}": `, count);
+            // });
+
+            // const analysisResult = findOrphans(astRootNode);
+            // console.log("nonorphans: ", analysisResult.nonOrphans);
+            // console.log("orphans: ", analysisResult.orphans);
+            const nodes = astRootNode.findAllNodes(node => node.data.opcode === "control_repeat_until"); 
+            //console.log("node: ", node); 
+            const repeatBlocks = checkRepeatExists(astRootNode);
+            repeatBlocks.forEach( block => {
+                console.log(block.data.opcode);
             });
-
+            const issues = checkIncorrectRepeatUsage(repeatBlocks);
+            console.log("issues: ", issues);
             orphanSort('output_ast.json');
         } catch (error) {
             console.error("An error occurred during index.js: ", error);

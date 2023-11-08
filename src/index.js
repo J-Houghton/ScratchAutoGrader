@@ -44,7 +44,7 @@ unzipSb3(filePath)
             });
 
             const testCharacterCount = countCharacters(astRootNode);
-            console.log("Sprite Count: ", testCharacterCount);
+            console.log("Correct Code Sprite Count: ", testCharacterCount);
 
             console.log(seeCustomChanges(astRootNode));
 

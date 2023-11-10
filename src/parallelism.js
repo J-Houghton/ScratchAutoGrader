@@ -11,13 +11,15 @@ export function checkParallelExists(astRootNode){
 
 export function checkParallelism(astRootNode){
 
-    const targets = astRootNode.root.data.targets;
+    const targets = astRootNode.root.children;
     const chars = [];
+    //console.log(astRootNode.root.children);
     targets.forEach(target => {
-        if(target.isStage !== true){
+        if(target.data.isStage !== true){
             chars.push(target);
         }
     });
+    
     /*
     console.log("Targets: ");
     console.info(targets);
@@ -25,10 +27,10 @@ export function checkParallelism(astRootNode){
     console.info(chars);*/
     
     const flagBlocks = chars.forEach(node => {
-        var blocks = node.blocks;
-        /*
+        var blocks = node.children;
+        console.log(node);
         console.log("block: ")
-        console.info(blocks);*/
+        console.info(blocks);
         blocks.forEach(block => {
             
         });

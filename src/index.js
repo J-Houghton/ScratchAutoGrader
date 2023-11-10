@@ -51,12 +51,17 @@ unzipSb3(filePath)
             const nodes = astRootNode.findAllNodes(node => node.data.opcode === "control_repeat_until"); 
             //console.log("node: ", node); 
             const repeatBlocks = checkRepeatExists(astRootNode);
-            repeatBlocks.forEach( block => {
-                console.log(block.data.opcode);
-            });
-            const issues = checkIncorrectRepeatUsage(repeatBlocks);
-            console.log("issues: ", issues);
-            orphanSort('output_ast.json');
+            if(repeatBlocks != null){
+                repeatBlocks.forEach( block => {
+                    console.log(block.data.opcode);
+                });
+                const issues = checkIncorrectRepeatUsage(repeatBlocks);
+                console.log("issues: ", issues);
+            }
+            orphanSort(astRootNode);
+
+            checkParallelism(astRootNode);
+
         } catch (error) {
             console.error("An error occurred during index.js: ", error);
         } 

@@ -31,7 +31,7 @@ export function orphanSort(filePath)
     const unDecided = [];
 
     //const targets = root.default.data.targets;
-    console.log(targets[0].blocks);
+    //console.log(targets[0].blocks);
 
     for (let i = 0; i < targets.length; i++) {
         var blocks = targets[i].blocks;
@@ -72,20 +72,21 @@ export function orphanSort(filePath)
         //console.log(unDecidedSub.length);
         for(let i = 0; i < unDecidedSub.length; i++){
             var blockName = unDecidedSub[i];
-            //console.log(blockName);
+            console.log(blockName);
             //console.log(blocks[blockName]);
-            if(blocks[blockName].parent == null){
+
+            if(blockName.parent == null){
                 console.log("Null parent error");
             }
-            else if(orphans.includes(blocks[blockName].parent)){
+            else if(orphans.includes(blockName.parent)){
                 //console.log(blocks[blockName] + " orphan descendant");
-                orphans.push(blocks[blockName]);
+                orphans.push(blockName);
             }
-            else if(nonOrphans.includes(blocks[blockName].parent)){
+            else if(nonOrphans.includes(blockName.parent)){
                 //console.log(blocks[blockName] + " nonorphan descendant");
-                nonOrphans.push(blocks[blockName]);
+                nonOrphans.push(blockName);
             }
-            else{console.log("HUH? HUH? HUH?")}
+            else{console.log("MYSTERY"); console.info(blockName);}
         }
 
 

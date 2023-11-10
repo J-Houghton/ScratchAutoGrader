@@ -18,10 +18,17 @@ export function checkParallelism(astRootNode){
             chars.push(target);
         }
     });
-
+    /*
+    console.log("Targets: ");
+    console.info(targets);
+    console.log("Chars: ");
+    console.info(chars);*/
     
     const flagBlocks = chars.forEach(node => {
         var blocks = node.blocks;
+        /*
+        console.log("block: ")
+        console.info(blocks);*/
         blocks.forEach(block => {
             
         });

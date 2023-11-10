@@ -5,8 +5,9 @@ export class Block {
         this.parent = data.parent;
         this.inputs = data.inputs;
         this.fields = data.fields;
+        this.name = data.name;
         // Other properties...
-    }
+    } 
 
     setInputs(inputs) {
         this.inputs = inputs;

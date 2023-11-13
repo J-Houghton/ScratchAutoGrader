@@ -60,7 +60,8 @@ unzipSb3(filePath)
             }
             orphanSort(astRootNode);
 
-            checkParallelism(astRootNode);
+            var para = checkParallelism(astRootNode);
+            console.info(para);
 
         } catch (error) {
             console.error("An error occurred during index.js: ", error);

@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import { Project } from './objects/Project.js';
 import { Target } from './objects/Target.js';
 import { Block } from './objects/Block.js';
-import { Node, AST} from './objects/ast.js';  
+import { Node, AST } from './objects/ast.js';  
 
 //as of now two places are calling buildAST(); 
 

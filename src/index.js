@@ -3,7 +3,7 @@
  
 import { unzipSb3 } from './sb3Unzipp.js';
 import { Parser } from './parser.js';
-import { /*countBlockTypes, countBlocksByOpcode,*/ countCharacters, seeCustomChanges /* findOrphans */ } from './count.js';
+import { countBlockTypes, countBlocksByOpcode, countCharacters, seeCustomChanges /* findOrphans */ } from './count.js';
 // import { orphanSort } from './orphans.js';
 // import { countBlockTypes, countBlocksByOpcode, findOrphans } from './count.js';
 import { checkRepeatExists, checkIncorrectRepeatUsage } from './repeat.js';
@@ -32,19 +32,19 @@ unzipSb3(filePath)
         try {
             const astRootNode = await parser.parse(unzippedFilePath);  
             //console.log(astRootNode); 
-            // const counts = countBlockTypes(astRootNode);
-            // console.log("Number of unique block types:", counts);
+            const counts = countBlockTypes(astRootNode);
+            console.log("Number of unique block types:", counts);
 
             // const uniqueBlockCount = Object.keys(counts).length; 
             // console.log("Total unique block types: ", uniqueBlockCount);
 
-            // // Test strings for opcode
-            // const testOpcodes = ["control", "looks_nextcostume"];
+            // Test strings for opcode
+            const testOpcodes = ["control", "looks_nextcostume"];
 
-            // testOpcodes.forEach(opcode => {
-            //     const count = countBlocksByOpcode(counts, opcode);
-            //     console.log(`Count of blocks for opcode "${opcode}": `, count);
-            // });
+            testOpcodes.forEach(opcode => {
+                const count = countBlocksByOpcode(counts, opcode);
+                console.log(`Count of blocks for opcode "${opcode}": `, count);
+            });
 
             // const analysisResult = findOrphans(astRootNode);
             // console.log("nonorphans: ", analysisResult.nonOrphans);
@@ -56,12 +56,11 @@ unzipSb3(filePath)
             //     console.log(block.data.opcode);
             // });
 
-            const testCharacterCount = countCharacters(astRootNode);
-            console.log("Correct Code Sprite Count: ", testCharacterCount);
+            console.log("Correct Code Sprite Count: ", countCharacters(astRootNode));
 
             console.log(seeCustomChanges(astRootNode));
 
-            //console.log("Stage Count: " + countStages(astRootNode));
+            // console.log("Stage Count: " + countStages(astRootNode));
 
             /*
             const analysisResult = findOrphans(astRootNode);

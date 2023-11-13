@@ -22,39 +22,9 @@ console.log("CountDifferentBlockTypes(): " + diffAmount);
 */
 
 /**
- * Counts the amount of blocks of a specific type
- * @param {*} json The output file with the AST tree
- * @param {*} type The type of block you want to count
- * @returns The amount of blocks of the specified type
- */
-/*
-function CountBlockPerType(json, type)
-{
-    let blockAmount = 0;
-    const targets = json.targets
-
-    for (let i = 0; i < targets.length; i++)
-    {  
-        let blocks = json.targets[i].blocks;
-        if (blocks != undefined) 
-        {
-            for (let block in blocks)
-            {
-                let opcode = blocks[block].opcode;      
-                const code = opcode.split("_");
-                if (code[0] == type) { blockAmount++; }
-            }
-        }
-    }
-
-    return blockAmount;
-}
-*/
-
-/**
  * Counts block types and puts them in a dictionary
- * @param {A json file of an ast tree of the project} ast 
- * @returns A dictionary with keys as block types and values as counts
+ * @param {AST} ast 
+ * @returns {Dictionary} A dictionary with keys as block types and values as counts
  */
 export function countBlockTypes(ast) {
     // Find all nodes of type 'Block'
@@ -71,9 +41,9 @@ export function countBlockTypes(ast) {
 
 /**
  * Checks to see if a criteria is in a block
- * @param {Dictionary?} counts 
- * @param {What you are checking that an opcode includes} criteria 
- * @returns 
+ * @param {Dictionary} counts A dictionary with keys as block types and values as counts
+ * @param {string} criteria What you are checking that an opcode includes
+ * @returns {int} How many blocks have the criteria
  */
 export function countBlocksByOpcode(counts, criteria) {
     // Check if the criteria match the start or the whole of any opcode
@@ -84,8 +54,8 @@ export function countBlocksByOpcode(counts, criteria) {
 
 /**
  * Counts the amount of characters(sprites) in a scratch project that have correct code
- * @param {An ast tree of the scratch project} ast 
- * @returns An integer of the amount of characters(sprites) a project has
+ * @param {AST} ast An ast tree of the scratch project
+ * @returns {int} An integer of the amount of characters(sprites) a project has
  */
 export function countCharacters(ast) {
     const allTargets = ast.findAllNodes(node => node.type === 'Target');
@@ -95,14 +65,97 @@ export function countCharacters(ast) {
     allTargets.forEach(target => {
         if (target.data.isStage === false) 
         { 
-            console.log("Sprite: " + target.data.name);
-            let blockArray = returnTargetBlocks(target);   
-            // console.log(blockArray);
+            // console.log("Sprite: " + target.data.name);
+            let blockArray = new Array();
+            returnTargetBlocks(target, blockArray);   
             if (checkCode(blockArray) === true) { validCharacterCount++; }
         }       
     });
 
     return validCharacterCount;
+}
+
+/**
+ * Finds all custom changes in an ast
+ * @param {AST} ast 
+ * @returns {Array<string>} An array of strings that show effects that different sprites have
+ */
+export function seeCustomChanges(ast) {
+    const allTargets = ast.findAllNodes(node => node.type === 'Target');
+
+    let customChanges = new Array();
+
+    allTargets.forEach(target => {
+        let blockArray = new Array();
+        returnTargetBlocks(target, blockArray);
+        // console.log(target.data.name);
+        // console.log(target.data.blocks);
+        blockArray.forEach(block => {
+            if (block.data.opcode != undefined) { 
+                if (block.data.opcode === "looks_changeeffectby" || block.data.opcode === "looks_seteffectto") {
+                    // console.log(block.data.fields.EFFECT[0]);
+                    let newString = target.data.name + ": " + block.data.opcode + " - " + block.data.fields.EFFECT[0]; 
+                    if (hasEventBlock(block)) { customChanges.push(newString); }
+                }
+            }
+        })
+    })
+
+    return customChanges;
+}
+
+/**
+ * Gets all the code blocks in a specific target (Stage or Sprite)
+ * @param {Node} targetNode The target you are trying to get the code blocks of
+ * @param {Array} targetBlocks A preinitialized array of the blocks in a target
+ */
+function returnTargetBlocks(targetNode, targetBlocks)
+{
+    targetNode.children.forEach(child => {
+        if (child.type === "Block") { targetBlocks.push(child); }
+        returnTargetBlocks(child, targetBlocks);
+    })
+}
+
+/** 
+ * Checks to see if the code has an event block and a motion, looks, or sound block
+ * @param {Array} blockArray An array of blocks for a target
+ * @returns {bool} True or false of whether the code is valid
+ */
+function checkCode(blockArray) {
+    let subTotalCount = 0;
+    let eventCount = 0; 
+
+    blockArray.forEach(block => {
+        // console.log(block.data.opcode);
+        if (block.data.parent != null) {
+            // console.log(block.data.opcode);
+            if (!block.data.opcode.endsWith("menu")) {
+                if (block.data.opcode.startsWith("motion")) { subTotalCount++; }
+                if (block.data.opcode.startsWith("looks")) { subTotalCount++; }
+                if (block.data.opcode.startsWith("sound")) { subtotalCount++; }      
+            }
+        }
+
+        if (block.data.opcode.startsWith("event")) { eventCount++; }
+    });
+
+    if (eventCount > 0 && subTotalCount > 0) { return true; }
+    else { return false; }
+}
+
+/**
+ * Checks to see whether a block is connected to an event block and is run in the code
+ * @param {Block} block 
+ * @returns {bool} Whether the block has an event block
+ */
+function hasEventBlock(block) {
+    // console.log("Checking for event block:" + block.data.parent);
+    if (block.data.parent === null) { 
+        if (block.data.opcode.startsWith("event")) { return true; }
+        else { return false; }
+    }
+    else { if (hasEventBlock(block.parent)) { return true; } } 
 }
 
 // export function countStages(ast)
@@ -124,31 +177,6 @@ export function countCharacters(ast) {
 
 //     return stageCount;
 // }
-
-export function seeCustomChanges(ast) {
-    const allTargets = ast.findAllNodes(node => node.type === 'Target');
-
-    let customChanges = new Array();
-
-    allTargets.forEach(target => {
-
-        let blockArray = returnTargetBlocks(target);
-        // console.log(target.data.name);
-        // console.log(target.data.blocks);
-        blockArray.forEach(block => {
-            if (block.data.opcode != undefined) { 
-                if (block.data.opcode === "looks_changeeffectby" || block.data.opcode === "looks_seteffectto") {
-                    // console.log(block.data.fields.EFFECT[0]);
-                    // checkForEventBlock(block);
-                    let newString = target.data.name + ": " + block.data.opcode + " - " + block.data.fields.EFFECT[0]; 
-                    customChanges.push(newString);
-                }
-            }
-        })
-    })
-
-    return customChanges;
-}
 
 /*
 export function findOrphans(projectData) {
@@ -213,63 +241,31 @@ export function findOrphans(projectData) {
 */
 
 /**
- * Gets all the code blocks in a specific target (Stage or Sprite)
- * @param {The target you are trying to get the code blocks of} targetNode 
- * @returns An array of code blocks for the specified target
+ * Counts the amount of blocks of a specific type
+ * @param {*} json The output file with the AST tree
+ * @param {*} type The type of block you want to count
+ * @returns The amount of blocks of the specified type
  */
-function returnTargetBlocks(targetNode)
+/*
+function CountBlockPerType(json, type)
 {
-    let targetBlocks = new Array();
+    let blockAmount = 0;
+    const targets = json.targets
 
-    targetNode.children.forEach(child => {
-        if (child.type === "Block") { targetBlocks.push(child); }
-    })
-
-    return targetBlocks;
-}
-
-/** 
- * Checks to see if the code has an event block and a motion, looks, or sound block
- * @param {An array of blocks for a target} blockArray 
- * @returns True or false of whether the code is valid
- */
-function checkCode(blockArray)
-{
-    // Creates a 
-    let subTotalCount = 0;
-    let eventCount = 0; 
-
-    blockArray.forEach(block => {
-
-        console.log(block.data.opcode);
-        if (block.data.parent != null)
+    for (let i = 0; i < targets.length; i++)
+    {  
+        let blocks = json.targets[i].blocks;
+        if (blocks != undefined) 
         {
-            // console.log(block.data.opcode);
-            if (!block.data.opcode.endsWith("menu"))
+            for (let block in blocks)
             {
-                if (block.data.opcode.startsWith("motion")) { subTotalCount++; }
-                if (block.data.opcode.startsWith("looks")) { subTotalCount++; }
-                if (block.data.opcode.startsWith("sound")) { subtotalCount++; }      
+                let opcode = blocks[block].opcode;      
+                const code = opcode.split("_");
+                if (code[0] == type) { blockAmount++; }
             }
         }
-
-        if (block.data.opcode.startsWith("event")) { eventCount++; }
-    });
-
-    if (eventCount > 0 && subTotalCount > 0) 
-    { 
-        return true;
     }
-    else { return false; }
-}
 
-function checkForEventBlock(block)
-{
-    console.log("Checking for event block:" + block.data.parent);
-    if (block.data.parent === null) 
-    { 
-        if (block.data.opcode.startsWith("event")) { console.log(block.data.opcode); return true; }
-        else { return false; }
-    }
-    else { checkForEventBlock(block.parent); } 
+    return blockAmount;
 }
+*/

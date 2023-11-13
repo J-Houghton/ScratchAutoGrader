@@ -97,6 +97,7 @@ export function countCharacters(ast) {
         { 
             console.log("Sprite: " + target.data.name);
             let blockArray = returnTargetBlocks(target);   
+            // console.log(blockArray);
             if (checkCode(blockArray) === true) { validCharacterCount++; }
         }       
     });
@@ -138,7 +139,7 @@ export function seeCustomChanges(ast) {
             if (block.data.opcode != undefined) { 
                 if (block.data.opcode === "looks_changeeffectby" || block.data.opcode === "looks_seteffectto") {
                     // console.log(block.data.fields.EFFECT[0]);
-                    checkForEventBlock(block);
+                    // checkForEventBlock(block);
                     let newString = target.data.name + ": " + block.data.opcode + " - " + block.data.fields.EFFECT[0]; 
                     customChanges.push(newString);
                 }
@@ -239,8 +240,11 @@ function checkCode(blockArray)
     let eventCount = 0; 
 
     blockArray.forEach(block => {
+
+        console.log(block.data.opcode);
         if (block.data.parent != null)
         {
+            // console.log(block.data.opcode);
             if (!block.data.opcode.endsWith("menu"))
             {
                 if (block.data.opcode.startsWith("motion")) { subTotalCount++; }

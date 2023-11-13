@@ -3,9 +3,9 @@
  
 import { unzipSb3 } from './sb3Unzipp.js';
 import { Parser } from './parser.js';
-import { countBlockTypes, countBlocksByOpcode, countCharacters, seeCustomChanges /* findOrphans */ } from './count.js';
+import { /*countBlockTypes, countBlocksByOpcode,*/ countCharacters, seeCustomChanges /* findOrphans */ } from './count.js';
 // import { orphanSort } from './orphans.js';
-import { countBlockTypes, countBlocksByOpcode, findOrphans } from './count.js';
+// import { countBlockTypes, countBlocksByOpcode, findOrphans } from './count.js';
 import { checkRepeatExists, checkIncorrectRepeatUsage } from './repeat.js';
 import { orphanSort } from './orphans.js';
 
@@ -49,12 +49,12 @@ unzipSb3(filePath)
             // const analysisResult = findOrphans(astRootNode);
             // console.log("nonorphans: ", analysisResult.nonOrphans);
             // console.log("orphans: ", analysisResult.orphans);
-            const nodes = astRootNode.findAllNodes(node => node.data.opcode === "control_repeat_until"); 
-            //console.log("node: ", node); 
-            const repeatBlocks = checkRepeatExists(astRootNode);
-            repeatBlocks.forEach( block => {
-                console.log(block.data.opcode);
-            });
+            // const nodes = astRootNode.findAllNodes(node => node.data.opcode === "control_repeat_until"); 
+            // //console.log("node: ", node); 
+            // const repeatBlocks = checkRepeatExists(astRootNode);
+            // repeatBlocks.forEach(block => {
+            //     console.log(block.data.opcode);
+            // });
 
             const testCharacterCount = countCharacters(astRootNode);
             console.log("Correct Code Sprite Count: ", testCharacterCount);
@@ -69,9 +69,9 @@ unzipSb3(filePath)
             console.log("orphans: ", analysisResult.orphans);
             */
             // orphanSort('output_ast.json');
-            const issues = checkIncorrectRepeatUsage(repeatBlocks);
-            console.log("issues: ", issues);
-            orphanSort('output_ast.json');
+            // const issues = checkIncorrectRepeatUsage(repeatBlocks);
+            // console.log("issues: ", issues);
+            // orphanSort('output_ast.json');
         } catch (error) {
             console.error("An error occurred during index.js: ", error);
         } 

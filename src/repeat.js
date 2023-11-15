@@ -1,3 +1,6 @@
+// TODO: finish implementation for checkRepeatUntilUsage, and it's helper functions checkConditionCanBeMet and checkConditionModification @135
+// TODO: fix return for function checkForExitCondition, checkIncorrectRepeatUsage
+// TODO: set up a flow for calling the functions, as of now some are being called in checkIncorrectRepeatUsage and some are set up to be called from another file  
 export function checkRepeatExists(astRootNode) {
     const repeatBlocks = astRootNode.findAllNodes(node => {
         return node.data.opcode === 'control_forever' || node.data.opcode === 'control_repeat' || node.data.opcode === 'control_repeat_until';
@@ -32,9 +35,10 @@ export function checkIncorrectRepeatUsage(repeatBlocks) {
           issues.push({ code: 'no_exit_condition', message: errorMessage });
         }
       }
-      //Empty 'repeat' or 'forever' blocks or blocks that only contain non-functional elements such as comments or disabled blocks should be avoided.
+      //Empty 'repeat' or 'forever' blocks or blocks that only contain non-functional elements such as comments or disabled blocks should be avoided. 
+      
     });
-    
+    const issues2 = checkRepeatUntilUsage(repeatBlocks) //call check for repeat_until usage
 
 
     return issues.length > 0 ? issues : null;
@@ -43,8 +47,20 @@ export function checkIncorrectRepeatUsage(repeatBlocks) {
 //Do not need to implement for control_forever, already checking exit conditon for nested forever blocks
 //a single forever loop might be aimed to run indefinitely, but if there is a nested forever block, it should be able to exit
 function checkForExitCondition(block) {
-  return true;
-}
+  if (block.data && block.data.opcode === "control_repeat") {
+    // Check if there's a numerical value for 'TIMES', which would mean the loop has an exit condition
+    const timesValue = block.data.inputs.TIMES && block.data.inputs.TIMES[1];
+    if (timesValue && typeof timesValue[1] === "string" && !isNaN(timesValue[1])) {
+      return true; // Loop has a numerical exit condition
+    } else {
+      return false; // Loop does not have a valid numerical exit condition
+    }
+  } else if (block.data && block.data.opcode === "control_repeat_until") {
+      const conditionCanBeMet = checkConditionCanBeMet(block);
+    return true; 
+  }
+}//return issues. 
+
 
 function isLoopEmptyOrNonFunctional(block) {
   if (block.children.length === 0 || block.children.every(isNonFunctionalBlock)) {
@@ -116,26 +132,65 @@ function findStopBlock(block, depth) {
 }
 
 
-function checkRepeatUntilUsage(astRootNode) {
-    // Get all 'control_repeat_until' blocks from the AST
-    // For each 'control_repeat_until' block:
-        // Check if the condition is ever met
-        // Check if the condition is modified inside the loop
-        // Check if the block is empty or contains only non-functional blocks
+function checkRepeatUntilUsage(blocks) {
+  const issues = [];
+
+  blocks.forEach(block => {
+      if (block.data.opcode === 'control_repeat_until') {
+          // Check if the condition can be met
+          const conditionCanBeMet = checkConditionCanBeMet(block);
+          if (!conditionCanBeMet) {
+              issues.push({ block: block, message: 'Condition in repeat until block may never be met' });
+          }
+
+          // Check if the condition is modified inside the loop
+          const conditionIsModified = checkConditionModification(block);
+          if (conditionIsModified) {
+              issues.push({ block: block, message: 'Condition in repeat until block is modified inside the loop' });
+          }
+
+          // Check if the block is empty or only contains non-functional blocks
+          if (isLoopEmptyOrNonFunctional(block)) {
+              issues.push({ block: block, message: 'Repeat until block is empty or contains only non-functional elements' });
+          }
+      }
+  });
+
+  return issues.length > 0 ? issues : null;
+}
+
+function checkConditionCanBeMet(block) {
+  // Implement the logic to check if the condition can be met 
+}
+
+function checkConditionModification(block) {
+  // Implement the logic to check if the condition is modified inside the loop
+  // This involves scanning the children of the block and checking if any modify the condition
 }
 
 //need to use along side of checkIncorrectRepeatUsage, if used all repeat correct(maybe above function return true) 
-//then check if there is only one children for repeat that is not another control block? 
-export function checkSingleBlockInsideOfRepeat(repeatBlocks) { //can pass parameters of array of repeat blocks
-    const issues = [];
-  
-    // Check for nested forever blocks without additional blocks for logic between the two.
-    repeatBlocks.forEach(repeatBlock => {
-      const foreverBlocks = repeatBlock.findAllNodes(node => node.data.opcode === 'control_forever');
-      if (repeatBlock.children.length == 1) {
-        return true;
-      }
-    });
+export function checkSingleBlockInsideOfRepeat(repeatBlocks) {
+  const issues = [];
+
+  repeatBlocks.forEach(repeatBlock => {
+      // Check if the repeat block has exactly one child
+      const target = repeatBlock.getTarget();
+      let targetName = target.name;
+      if (repeatBlock.children.length === 1) {
+          const child = repeatBlock.children[0];
+
+          // Check if the child does not have any children
+          if (child.children.length === 0) {
+            const controlBlockName = getControlBlockName(repeatBlock.data.opcode);
+            const errorMessage = `The ${controlBlockName} control block from ${targetName} only contain one child.`; 
+            issues.push({ code: 'exact_one_child_in_repeat_control', message: errorMessage });
+          } else {
+              // The child has children  
+          }
+      } 
+  });
+  //do not need to check empty already being checked in checkIncorrectRepeatUsage
+  return issues.length > 0 ? issues : null;
 }
 
 //same as above but more than one children?, below function might not be needed if above reutrns true and false, multiple blocks inside of repeat not counting control(repeat) blocks.

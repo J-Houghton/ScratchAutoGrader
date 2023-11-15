@@ -45,24 +45,18 @@ unzipSb3(filePath)
             //     console.log(`Count of blocks for opcode "${opcode}": `, count);
             // });
 
-            // const analysisResult = findOrphans(astRootNode);
-            // console.log("nonorphans: ", analysisResult.nonOrphans);
-            // console.log("orphans: ", analysisResult.orphans);
-            const nodes = astRootNode.findAllNodes(node => node.data.opcode === "control_repeat_until"); 
+            //const nodes = astRootNode.findAllNodes(node => node.data.opcode === "control_repeat_until"); 
             //console.log("node: ", node); 
-            const repeatBlocks = checkRepeatExists(astRootNode);
-            if(repeatBlocks != null){
-                repeatBlocks.forEach( block => {
-                    console.log(block.data.opcode);
-                });
-                const issues = checkIncorrectRepeatUsage(repeatBlocks);
-                console.log("issues: ", issues);
-            }
+            //const repeatBlocks = checkRepeatExists(astRootNode);
+            //repeatBlocks.forEach( block => {
+            //    console.log(block.data.opcode);
+            //});
+            //const issues = checkIncorrectRepeatUsage(repeatBlocks);
+            //console.log("issues: ", issues);
+            //console.log(astRootNode);  
             orphanSort(astRootNode);
-
             var para = checkParallelism(astRootNode);
             console.log(para);
-
         } catch (error) {
             console.error("An error occurred during index.js: ", error);
         } 

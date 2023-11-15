@@ -133,7 +133,7 @@ function checkCode(blockArray) {
             if (!block.data.opcode.endsWith("menu")) {
                 if (block.data.opcode.startsWith("motion")) { subTotalCount++; }
                 if (block.data.opcode.startsWith("looks")) { subTotalCount++; }
-                if (block.data.opcode.startsWith("sound")) { subtotalCount++; }      
+                if (block.data.opcode.startsWith("sound")) { subTotalCount++; }      
             }
         }
 

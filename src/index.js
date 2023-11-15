@@ -48,7 +48,7 @@ unzipSb3(filePath)
             // const analysisResult = findOrphans(astRootNode);
             // console.log("nonorphans: ", analysisResult.nonOrphans);
             // console.log("orphans: ", analysisResult.orphans);
-            const nodes = astRootNode.findAllNodes(node => node.data.opcode === "control_repeat_until"); 
+            //const nodes = astRootNode.findAllNodes(node => node.data.opcode === "control_repeat_until"); 
             //console.log("node: ", node); 
             const repeatBlocks = checkRepeatExists(astRootNode);
             if(repeatBlocks != null){

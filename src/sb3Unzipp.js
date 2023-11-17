@@ -9,7 +9,7 @@ export async function unzipSb3(filePath, outputDir = './unzippedSb3') {
     // Load the .sb3 content with JSZip
     const zip = new JSZip();
     const contents = await zip.loadAsync(data);
-
+    
     // Ensure the output directory exists
     await fs.ensureDir(outputDir);
 

@@ -5,13 +5,12 @@ import fs from 'fs/promises';
 import { orphanSort } from '../orphans.js';
 import { unzipSb3 } from '../sb3Unzipp.js';
 import { Parser } from '../parser.js';
-import {countBlockTypes} from '../count.js';
-import {countBlocksByOpcode} from '../count.js';
+import { countBlockTypes } from '../count.js';
+import { countBlocksByOpcode } from '../count.js';
 
 var filepath = await unzipSb3('sb3Files/3-hello1.sb3');
 const parser = new Parser(); 
 const astRootNode = await parser.parse(filepath);
-
 
 describe('Array Baseline', function () {
   describe('#baseline()', function () {
@@ -74,7 +73,6 @@ describe('Count result', async function () {
     });
   });
 });
-
 
 describe('Count result', async function () {
   describe('#unzippedsb3File()', async function () {

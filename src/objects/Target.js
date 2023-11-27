@@ -2,7 +2,7 @@ export class Target {
   constructor(data) {
     this.isStage = data.isStage;
     this.name = data.name;
-    this.blocks = [];
+    // this.blocks = [];
     // Other properties
     //vars
     //lists

@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import { Project } from './objects/Project.js';
 import { Target } from './objects/Target.js';
 import { Block } from './objects/Block.js';
-import { Node, AST} from './objects/ast.js';  
+import { Node, AST } from './objects/ast.js';  
 
 //as of now two places are calling buildAST(); 
 
@@ -42,6 +42,8 @@ export class Parser {
     
         projectData.targets.forEach(targetData => {
             const target = new Target(targetData);
+            //project.addTarget(target);
+
             const targetNode = new Node('Target', target);
             rootNode.addChild(targetNode);
     
@@ -49,6 +51,8 @@ export class Parser {
             const blockMap = new Map();
             Object.entries(targetData.blocks).forEach(([blockId, blockData]) => {
                 const block = new Block(blockData);
+                //target.addBlock(block);
+
                 const blockNode = new Node('Block', block);
                 blockMap.set(blockId, blockNode);
             });

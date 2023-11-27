@@ -31,17 +31,17 @@ unzipSb3(filePath)
             const astRootNode = await parser.parse(unzippedFilePath);  
             const allTargets = astRootNode.findAllNodes(node => node.type === 'Target');
 
-            console.log(allTargets);
+            // console.log(allTargets);
 
             // astRootNode.children.forEach(child => {
             //     console.log(child); 
             // });
 
-            // const counts = countBlockTypes(astRootNode);
-            // console.log("Number of unique block types:", counts);
+            const counts = countBlockTypes(astRootNode);
+            console.log("Number of unique block types:", counts);
 
-            // const uniqueBlockCount = Object.keys(counts).length; 
-            // console.log("Total unique block types: ", uniqueBlockCount);
+            const uniqueBlockCount = Object.keys(counts).length; 
+            console.log("Total unique block types: ", uniqueBlockCount);
 
             // Test strings for opcode
             // const testOpcodes = ["control", "looks_nextcostume"];
@@ -61,9 +61,9 @@ unzipSb3(filePath)
             //     console.log(block.data.opcode);
             // });
 
-            // console.log("Correct Code Sprite Count: ", countCharacters(astRootNode));
+            console.log("Correct Code Sprite Count: ", countCharacters(astRootNode));
 
-            // console.log(seeCustomChanges(astRootNode));
+            console.log(seeCustomChanges(astRootNode));
 
             // console.log("Stage Count: " + countStages(astRootNode));
 

@@ -63,8 +63,7 @@ export function countCharacters(ast) {
     let validCharacterCount = 0;
 
     allTargets.forEach(target => {
-        if (target.data.isStage === false) 
-        { 
+        if (target.data.isStage === false) { 
             // console.log("Sprite: " + target.data.name);
             let blockArray = new Array();
             returnTargetBlocks(target, blockArray);   

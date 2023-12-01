@@ -6,6 +6,8 @@ import { Parser } from './parser.js';
 import { countBlockTypes, countBlocksByOpcode, countCharacters, seeCustomChanges /* findOrphans */ } from './count.js';
 import { checkRepeatExists, checkIncorrectRepeatUsage } from './repeat.js';
 import { orphanSort } from './orphans.js';
+import { getSpriteOutputInfo, getCostumes } from './scratchOutput.js';
+import { moveBlock } from './blockMethods.js';
 
 // Grab the file path from command-line arguments
 const filePath = process.argv[2]; 
@@ -76,6 +78,16 @@ unzipSb3(filePath)
             // const issues = checkIncorrectRepeatUsage(repeatBlocks);
             // console.log("issues: ", issues);
             // orphanSort('output_ast.json');
+
+            allTargets.forEach(target => {
+                getCostumes(target);
+                moveBlock(target, 10);
+                
+                if (target.data.isStage === false) {
+                    getSpriteOutputInfo(target);
+                }
+            })
+
         } catch (error) {
             console.error("An error occurred during index.js: ", error);
         } 

@@ -19,6 +19,8 @@ export class Parser {
             // Read the JSON data from the file
             const jsonData = await fs.readFile(filePath, 'utf-8');
             this.projectData = JSON.parse(jsonData);
+
+            //console.log(jsonData);
             //await this.writeDebugDataToFile(this.projectData);
             // Create an AST with the root node
             const ast = this.buildAST(this.projectData);

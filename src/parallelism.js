@@ -32,6 +32,7 @@ export function checkParallelism(astRootNode){
     
     //Iterates through both checks for every character
     var result;
+    result = 'No Parallelism';
     chars.forEach(node => {
         var flag = [];
         var key = [];

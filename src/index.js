@@ -7,6 +7,7 @@ import { countBlockTypes, countBlocksByOpcode, countCharacters, seeCustomChanges
 import { checkRepeatExists, checkIncorrectRepeatUsage } from './repeat.js';
 import { orphanSort } from './orphans.js';
 import { checkParallelism } from './parallelism.js';
+import { checkEvent } from './event grading.js';
 
 // Grab the file path from command-line arguments
 const filePath = process.argv[2]; 
@@ -32,7 +33,7 @@ unzipSb3(filePath)
             const astRootNode = await parser.parse(unzippedFilePath);  
             const allTargets = astRootNode.findAllNodes(node => node.type === 'Target');
 
-            console.log(allTargets);
+            // console.log(allTargets);
 
             // astRootNode.children.forEach(child => {
             //     console.log(child); 
@@ -61,9 +62,9 @@ unzipSb3(filePath)
             //     console.log(block.data.opcode);
             // });
 
-            // console.log("Correct Code Sprite Count: ", countCharacters(astRootNode));
+            console.log("Correct Code Sprite Count: ", countCharacters(astRootNode));
 
-            // console.log(seeCustomChanges(astRootNode));
+            console.log(seeCustomChanges(astRootNode));
 
             // console.log("Stage Count: " + countStages(astRootNode));
 
@@ -78,6 +79,7 @@ unzipSb3(filePath)
             orphanSort(astRootNode);
             var para = checkParallelism(astRootNode);
             console.log(para);
+            var events = checkEvent(astRootNode);
         } catch (error) {
             console.error("An error occurred during index.js: ", error);
         } 

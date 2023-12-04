@@ -35,9 +35,22 @@ export function checkEvent(astRootNode){
             }
         }
         if(block.data.opcode === 'event_whenflagclicked'){
-            for(var i = block.children[0]; i !== null; i = i.children[0]){
-                console.info(i);
+            console.log('EVENTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
+            
+            if(block.children.length >= 1){
+                var y = 0;
+                for(var i = block.children[y]; i !== undefined; i = i.children[y]){
+                    if(i.children.length >= 1){
+                        if(i.children[0].data.opcode.endsWith("menu")){
+                            y = 1;
+                        }
+                    }
+                    else{y = 0;}
+                    console.log('i:');
+                    console.info(i);
+                }
             }
+            
         }
         
     

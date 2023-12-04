@@ -7,7 +7,7 @@ import { countBlockTypes, countBlocksByOpcode, countCharacters, seeCustomChanges
 import { checkRepeatExists, checkIncorrectRepeatUsage } from './repeat.js';
 import { orphanSort } from './orphans.js';
 import { getSpriteOutputInfo, getCostumes } from './scratchOutput.js';
-import { moveBlock } from './blockMethods.js';
+import { moveBlock, turnLeftBlock, turnRightBlock } from './blockMethods.js';
 
 // Grab the file path from command-line arguments
 const filePath = process.argv[2]; 
@@ -39,11 +39,11 @@ unzipSb3(filePath)
             //     console.log(child); 
             // });
 
-            const counts = countBlockTypes(astRootNode);
-            console.log("Number of unique block types:", counts);
+            // const counts = countBlockTypes(astRootNode);
+            // console.log("Number of unique block types:", counts);
 
-            const uniqueBlockCount = Object.keys(counts).length; 
-            console.log("Total unique block types: ", uniqueBlockCount);
+            // const uniqueBlockCount = Object.keys(counts).length; 
+            // console.log("Total unique block types: ", uniqueBlockCount);
 
             // Test strings for opcode
             // const testOpcodes = ["control", "looks_nextcostume"];
@@ -63,9 +63,9 @@ unzipSb3(filePath)
             //     console.log(block.data.opcode);
             // });
 
-            console.log("Correct Code Sprite Count: ", countCharacters(astRootNode));
+            // console.log("Correct Code Sprite Count: ", countCharacters(astRootNode));
 
-            console.log(seeCustomChanges(astRootNode));
+            // console.log(seeCustomChanges(astRootNode));
 
             // console.log("Stage Count: " + countStages(astRootNode));
 
@@ -82,6 +82,8 @@ unzipSb3(filePath)
             allTargets.forEach(target => {
                 getCostumes(target);
                 moveBlock(target, 10);
+                // turnRightBlock(target, 100);
+                turnLeftBlock(target, 365);
                 
                 if (target.data.isStage === false) {
                     getSpriteOutputInfo(target);

@@ -7,7 +7,7 @@ import { countBlockTypes, countBlocksByOpcode, countCharacters, seeCustomChanges
 import { checkRepeatExists, checkIncorrectRepeatUsage } from './repeat.js';
 import { orphanSort } from './orphans.js';
 import { getSpriteOutputInfo, getCostumes } from './scratchOutput.js';
-import { moveBlock, turnLeftBlock, turnRightBlock } from './blockMethods.js';
+import { moveBlock, turnLeftBlock, turnRightBlock, saySecondsBlock } from './blockMethods.js';
 
 // Grab the file path from command-line arguments
 const filePath = process.argv[2]; 
@@ -81,12 +81,13 @@ unzipSb3(filePath)
 
             allTargets.forEach(target => {
                 getCostumes(target);
-                moveBlock(target, 10);
+                // moveBlock(target, 10);
                 // turnRightBlock(target, 100);
-                turnLeftBlock(target, 365);
+                // turnLeftBlock(target, 365);
                 
                 if (target.data.isStage === false) {
                     getSpriteOutputInfo(target);
+                    saySecondsBlock(target, "Hi", 2);
                 }
             })
 

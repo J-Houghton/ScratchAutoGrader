@@ -6,6 +6,7 @@ export class Target {
     this.y = data.y;
     this.direction = data.direction;
     this.size = data.size;
+    // this.currentCostume = currentCostume;
     this.costumes = data.costumes;
 
     // this.blocks = [];

@@ -1,3 +1,5 @@
+// #region Motion Blocks
+
 /**
  * Simulates a move block in scratch
  * @param {Target} sprite The sprite being moved
@@ -109,7 +111,7 @@ export function pointInDirectionBlock(sprite, direction)
 }
 
 /**
- * Increments the x value by the specified amount
+ * Increments the X value by the specified amount
  * @param {Target} sprite The sprite being moved
  * @param {int} amount The amount of movement
  */
@@ -119,7 +121,7 @@ export function changeXByBlock(sprite, amount)
 }
 
 /**
- * Increments the y value by the specified amount
+ * Increments the Y value by the specified amount
  * @param {Target} sprite The sprite being moved
  * @param {*} amount The amount of movement
  */
@@ -129,9 +131,9 @@ export function changeYByBlock(sprite, amount)
 }
 
 /**
- * Moves a sprite's x location
+ * Moves a sprite's X location
  * @param {Target} sprite The sprite being moved
- * @param {int} x The desired x location
+ * @param {int} X The desired x location
  */
 export function setXToBlock(sprite, x)
 {
@@ -139,29 +141,88 @@ export function setXToBlock(sprite, x)
 }
 
 /**
- * Moves a sprite's y location
+ * Moves a sprite's Y location
  * @param {Target} sprite The sprite being moved
- * @param {int} y The desired y location
+ * @param {int} y The desired Y location
  */
 export function setYToBlock(sprite, y)
 {
     sprite.data.y = y;
 }
 
+/**
+ * Gets the X position of the sprite
+ * @param {Target} sprite 
+ * @returns The X position of the sprite
+ */
 export function xPositionBlock(sprite)
 {
     return sprite.data.x;
 }
 
+/**
+ * Gets the Y position of the sprite
+ * @param {Target} sprite The target sprite
+ * @returns The Y position of the sprite
+ */
 export function yPositionBlock(sprite)
 {
     return sprite.data.y;
 }
 
+/**
+ * This function gets the direction a sprite is facing
+ * @param {Target} sprite The target sprite
+ * @returns The direction of the sprite
+ */
 export function directionBlock(sprite)
 {
     return sprite.data.direction;
 }
+
+// #endregion
+
+// #region Looks blocks - May need to update to change output
+
+export function saySecondsBlock(sprite, phrase, seconds)
+{
+    console.log(sprite.data.name + " says '" + phrase + "' for " + seconds + " seconds");
+}
+
+export function sayBlock(sprite, phrase)
+{
+    console.log(sprite.data.name + " says '" + phrase + "'");
+}
+
+export function thinksSecondsBlock(sprite, phrase, seconds)
+{
+    console.log(sprite.data.name + " thinks '" + phrase + "' for " + seconds + " seconds");
+}
+
+export function thinksBlock(sprite, phrase)
+{
+    console.log(sprite.data.name + " thinks '" + phrase + "'");
+}
+
+export function switchCostumeBlock(sprite, costume)
+{
+    // WIP
+    if (sprite.data.costumes.includes(costume)) {
+        sprite.data.currentCostume = costume;
+    } 
+}
+
+export function changeSizeByBlock(sprite, increment)
+{
+    sprite.data.size += increment;
+}
+
+export function setSizeToBlock(sprite, size)
+{
+    sprite.data.size = size;
+}
+
+
 
 /**
  * Returns an angle in radians
@@ -172,3 +233,4 @@ function toRadians (angle)
 {
     return angle * (Math.PI / 180);
 }
+

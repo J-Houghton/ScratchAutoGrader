@@ -1,5 +1,3 @@
-
-
 export function getSpriteOutputInfo(target)
 {
     console.log("\nName: " + target.data.name);
@@ -16,6 +14,7 @@ export function getSpriteOutputInfo(target)
 export function getCostumes(target)
 {
     console.log('\n' + target.data.name + ": ");
+    console.log("Current Costume: " + target.data.currentCostume);
     target.data.costumes.forEach(costume => 
     {
         console.log(costume.name);

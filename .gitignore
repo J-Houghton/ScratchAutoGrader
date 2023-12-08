@@ -39,7 +39,6 @@ bower_components
 build/Release
 
 # Dependency directories
-src/node_modules/
 src/jspm_packages/
 src/package-lock.json
 
@@ -136,7 +135,6 @@ src/output_ast.json
 src/output/*
 
 # API 
-API/node_modules/
 API/unzippedSb3/*
 API/package-lock.json
 API/output_ast.json

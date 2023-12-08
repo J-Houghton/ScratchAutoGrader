@@ -1,3 +1,5 @@
+To run, npm start sb3File/name.sb3
+
 # Scratch Autograder
 ## Introduction
 

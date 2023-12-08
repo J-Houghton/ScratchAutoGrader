@@ -30,8 +30,9 @@ export function orphanSort(ast) {
     // Traverse the AST from the root
     ast.root.children.forEach(target => target.children.forEach(processNode));
 
+    /*
     console.log("nonorphans: ", nonOrphans);
-    console.log("orphans: ", orphans);
+    console.log("orphans: ", orphans);*/
 
     return [orphans, nonOrphans];
 }

@@ -157,25 +157,19 @@ function hasEventBlock(block) {
     else { if (hasEventBlock(block.parent)) { return true; } } 
 }
 
-// export function countStages(ast)
-// {
-//     const allTargets = ast.findAllNodes(node => node.type === 'Target')
+export function countStages(ast)
+{
+    const allTargets = ast.findAllNodes(node => node.type === 'Target')
 
-//     let stageCount = 0;
+    let stageCount = 1;
 
-//     allTargets.forEach(target => {
-//         if (target.data.isStage === true) { stageCount++; }
-//     })
+    allTargets.forEach(target => 
+    {
+        if (target.data.isStage === true) { stageCount = target.data.costumes.length }
+    })
 
-//     /*
-//     for (let i = 0; i < childArray.length; i++) { 
-//         //console.log(childArray[i])
-//         if (childArray[i].data.isStage === true) { stageCount++; }
-//     }
-//     */
-
-//     return stageCount;
-// }
+    return stageCount;
+}
 
 /*
 export function findOrphans(projectData) {

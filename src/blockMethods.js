@@ -75,6 +75,16 @@ export function turnLeftBlock(sprite, amount)
 }
 
 /**
+ * Simulates a go to random block
+ * @param {Target} sprite The sprite being moved
+ */
+export function goToRandomBlock(sprite)
+{
+    sprite.data.x = Math.floor(Math.random() * 544) - 272;
+    sprite.data.y = Math.floor(Math.random() * 429) - 214;
+}
+
+/**
  * Simulates a go to block - moves a sprite to the specified location
  * @param {Target} sprite The sprite being moved
  * @param {int} x The desired x location
@@ -87,6 +97,16 @@ export function goToBlock(sprite, x, y)
 }
 
 /**
+ * Simulates a glide to random block - moves a sprite to a random location over time
+ * @param {Target} sprite The sprite being moved
+ */
+export function glideToRandomBlock(sprite)
+{
+    // WIP
+    goToRandomBlock(sprite);
+}
+
+/**
  * Simulates a glide to block - moves a sprite to a location over time
  * @param {Target} sprite The sprite being moved 
  * @param {int} seconds The amount of seconds it will take
@@ -96,8 +116,8 @@ export function goToBlock(sprite, x, y)
  */
 export function glideToBlock(sprite, seconds, x, y)
 {
-    // FINISH
-    return goToBlock(sprite, x, y);
+    // WIP
+    goToBlock(sprite, x, y);
 }
 
 /**
@@ -108,6 +128,11 @@ export function glideToBlock(sprite, seconds, x, y)
 export function pointInDirectionBlock(sprite, direction)
 {
     sprite.data.direction = direction;
+}
+
+export function pointTowardsBlock(sprite, x, y)
+{
+    // WIP
 }
 
 /**
@@ -186,6 +211,7 @@ export function directionBlock(sprite)
 
 export function saySecondsBlock(sprite, phrase, seconds)
 {
+    // WIP
     console.log(sprite.data.name + " says '" + phrase + "' for " + seconds + " seconds");
 }
 
@@ -196,6 +222,7 @@ export function sayBlock(sprite, phrase)
 
 export function thinksSecondsBlock(sprite, phrase, seconds)
 {
+    // WIP
     console.log(sprite.data.name + " thinks '" + phrase + "' for " + seconds + " seconds");
 }
 
@@ -222,7 +249,7 @@ export function setSizeToBlock(sprite, size)
     sprite.data.size = size;
 }
 
-
+// #endregion
 
 /**
  * Returns an angle in radians

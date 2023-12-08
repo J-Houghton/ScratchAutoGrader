@@ -3,11 +3,11 @@
  
 import { unzipSb3 } from './sb3Unzipp.js';
 import { Parser } from './parser.js';
-import { countBlockTypes, countBlocksByOpcode, countCharacters, seeCustomChanges /* findOrphans */ } from './count.js';
+import { countBlockTypes, countBlocksByOpcode, countCharacters, seeCustomChanges, countStages /* findOrphans */ } from './count.js';
 import { checkRepeatExists, checkIncorrectRepeatUsage } from './repeat.js';
 import { orphanSort } from './orphans.js';
 import { getSpriteOutputInfo, getCostumes } from './scratchOutput.js';
-import { moveBlock, turnLeftBlock, turnRightBlock, saySecondsBlock } from './blockMethods.js';
+import { moveBlock, turnLeftBlock, turnRightBlock, saySecondsBlock, goToRandomBlock } from './blockMethods.js';
 
 // Grab the file path from command-line arguments
 const filePath = process.argv[2]; 
@@ -33,6 +33,7 @@ unzipSb3(filePath)
             const astRootNode = await parser.parse(unzippedFilePath);  
             const allTargets = astRootNode.findAllNodes(node => node.type === 'Target');
 
+            // console.log("Stages Count: " + countStages(astRootNode));
             // console.log(allTargets);
 
             // astRootNode.children.forEach(child => {
@@ -86,8 +87,9 @@ unzipSb3(filePath)
                 // turnLeftBlock(target, 365);
                 
                 if (target.data.isStage === false) {
-                    getSpriteOutputInfo(target);
                     saySecondsBlock(target, "Hi", 2);
+                    goToRandomBlock(target);
+                    getSpriteOutputInfo(target);
                 }
             })
 

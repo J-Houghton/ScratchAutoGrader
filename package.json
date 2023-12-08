@@ -1,0 +1,28 @@
+{
+  "name": "scratchautograder",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "The Scratch Program Autograder is a software tool developed to automate the evaluation of Scratch projects submitted by students.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha",
+    "test2": "mocha",
+    "start": "node src/index.js",
+    "start-api": "node api/apiServer.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "fs-extra": "^11.1.1",
+    "jszip": "^3.10.1",
+    "mocha": "^10.2.0",
+    "parse-sb3-blocks": "^0.5.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

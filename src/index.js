@@ -6,6 +6,7 @@ import { Parser } from './parser.js';
 import { countBlockTypes, countBlocksByOpcode, countCharacters, seeCustomChanges /* findOrphans */ } from './count.js';
 import { checkRepeatExists, checkIncorrectRepeatUsage } from './repeat.js';
 import { orphanSort } from './orphans.js';
+import { convertSb3ToJs } from './sb3tojs.js';
 
 // Grab the file path from command-line arguments
 const filePath = process.argv[2]; 
@@ -23,15 +24,17 @@ if(extension != 'sb3'){
     console.log("Incorrect File Extention: " + extension);
     process.exit(1);
 }
-
+//rename objects, group files toget
+//move folder to root such as unziipped sb3 
 unzipSb3(filePath)
     .then(async (unzippedFilePath) => {
         const parser = new Parser(); 
         try {
             const astRootNode = await parser.parse(unzippedFilePath);  
             const allTargets = astRootNode.findAllNodes(node => node.type === 'Target');
-
-            console.log(allTargets);
+            //console.log(unzippedFilePath);
+            convertSb3ToJs(filePath);
+            //console.log(allTargets);
 
             // astRootNode.children.forEach(child => {
             //     console.log(child); 

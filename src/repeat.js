@@ -78,11 +78,13 @@ function getControlBlockName(opcode) {
   return opcodeNames[opcode] || 'unknown block';
 }
 
+/* */ //jsdoc 
 function isNonFunctionalBlock(block) { 
   // NEED to define other non-functional blocks
   return block.data.opcode === "comment";
 }
 
+/**/
 function findNestedControlForeverWithoutStop(block, depth = 0) {
   // Check if the block is a 'control_forever' and has children
   if (block.data && block.data.opcode === "control_forever") {
